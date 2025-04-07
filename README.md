@@ -1,155 +1,165 @@
-PADS(1)                                     Comprehensive Documentation                                     PADS(1)
+PADS is a general purpose programming language designed to automate tasks, and run complex scripts in a format that only involves a few flags, and options. The first flag in the syntax is made to access logic from modules which may have their own complex logic. The second flag in the syntax is made to access options that may be available in those modules. PADS also has robust error checking; so you can be sure not to enter the wrong flags. Also see: info pads for the comprehensive guide. The man page may be out of date.
 
-NAME
-       PADS - Personal Assistant and Deployment System
+Synopsis:  
 
-SYNOPSIS
-       <cmd> -[<module>] -[<argument>] -[<option>] [name...]
+~~~bash
+        `<cmd> -[<module>] -[<argument>] -[<option>] [name...]`  
 
-       pads -S -[b,u,i,l,d,r:,m,s,h,v] [name...]
+        `pads -S -[b,u,i,l,d,r:,m,s,h,v] [name...]`  
 
-       pads -P -[p:,f:,g:,h,v] -[m:,s:,d-h] <name>
+        `pads -P -[p:,f:,g:,h,v] -[m:,s:,d-h] <name>`  
 
-       pads -R -[s:,v,h] <name...>
+        `pads -R -[s:,v,h] <name...>`  
 
-       pads -T [-h|-v]
+        `pads -T [-h|-v]`  
 
-       pads -x
+        `pads -x`  
 
-       pads -h
+        `pads -h`  
 
-       pads -v
+        `pads -v`  
+~~~
 
-DESCRIPTION
-       PADS is a general purpose programming language designed to automate tasks, and run complex scripts in a for‐
-       mat  that only involves a few flags, and options.  The first flag in the syntax is made to access logic from
-       modules which may have their own complex logic.  The second flag in the syntax is  made  to  access  options
-       that  may be available in those modules.  PADS also has robust error checking; so you can be sure not to en‐
-       ter the wrong flags.  Also see: info pads for the comprehensive guide.  This may become out  of  date  if  I
-       forget to up‐ date it.
+## Options  
 
-OPTIONS
-   -S -[b,u,i,l,d,r:,m,s,h,v] [name...]
-       Run  automated  system  scripts and exit.  The logic for this module is intended to interact with the OS it‐
-       self.  The options are as follows:
+### System Module
 
-       -b     Backup your system to {set a location}
+`-S -[b,u,i,l,d,r:,m,s,h,v] [name...]`  
+Run automated system scripts and exit. The logic for this module is intended to interact with the OS itself. The options are as follows:  
 
-       -u [name...]
-              Update your machine.  If given a name it will attempt to install packages.
+        `-b`  
+        : Backup your system to {set a location}
 
-       -i     Update pads info page.  Docs are at: pads/docs/pads.texi
+        `-u` [name...]  
+        : Update your machine. If given a name it will attempt to install packages.
 
-       -l     List packages installed on this machine.
+        `-i`  
+        : Update pads info page. Docs are at: pads/docs/pads.texi
 
-       -d     Update pads’ man page.  Docs are at: pads/docs/pads.1.
+        `-l`  
+        : List packages installed on this machine.
 
-       -r <name...>
-              Remove supplied packages
+        `-d`  
+        : Update pads' man page. Docs are at: pads/docs/pads.1.
 
-       -m     Set up Mariadb
+        `-r` <name...>  
+        : Remove supplied packages
 
-       -h     Show help
+        `-m`  
+        : Set up Mariadb
 
-   -P -[p:|f:|g:|h|v] -[<m|s|d>] <name>
-       Run modules parsed in another language and exit.  This module is intended to  run  full  programs.   Usually
-       something other than Bash.  The m flag is make, the s flag is start, the d flag is delete the project.
+        `-v`  
+        : Show version
 
-       -p -[<m|s|d>]
-              For managing a Python Project or Module.
+        `-h`  
+        : Show help
 
-       -f -[<m|s|d>]
-              For managing a Flask Project or Module.
+### Project Module
 
-       -g -[<m|s|d>]
-              For managing a Pygames Project or Module.
+`-P -[p:|f:|g:|h|v] -[<m|s|d>] <name>`  
+Run modules parsed in another language and exit. This module is intended to run full programs. Usually something other than Bash. The m flag is make, the s flag is start, the d flag is delete the project.
 
-       -h     Show help for the P module and exit
+        `-p -[<m|s|d>] <name>`  
+        : For managing a Python Project or Module.
 
-       -v     Show version for the -p module and exit
+        `-f -[<m|s|d>] <name>`  
+        : For managing a Flask Project or Module.
 
-   -R [-s|-h|-v]
-       Used to run any random script within the r_opts.sh file.  This flag is good for testing.
+        `-g -[<m|s|d>] <name>`  
+        : For managing a Pygames Project or Module.
 
-       -s [<name>]
-              Run the given script.  Good for scripts that dont fit into a module.
+        `-h`  
+        : Show help for the P module and exit
 
-       -h     Show help for the R module.
+        `-v`  
+        : Show version for the -p module and exit
 
-       -v     Show version for the R module.
+### Run Module
 
-   -T -[arg]
-       For tests scripts
+`-R [-s|-h|-v]`  
+Used to run any random script within the r_opts.sh file. This flag is good for testing.
 
-       -h     Show help for PADS and exit.
+        `-s [<name>]`  
+        : Run the given script. Good for scripts that dont fit into a module.
 
-       -v     Show version for PADS and exit
+        `-h`  
+        : Show help for the R module.
 
-EXAMPLES
-       pads -Ph
-       Show project help and exit
+        `-v`  
+        : Show version for the R module.
 
-       pads -Ppm brain; pads -Pps brain
-       Make then start a python project named “brain”.  This will create a virtual env for the project as well.
+### Test Module
 
-       pads -Pfm brain; pads -Pfs brain
-       Make a flask project named “brain”.  This will create a virtual env for the project as well.
+`-T -[arg]` [name] 
+For tests scripts
 
-       pads -Ppd brain
-       Delete the project named “brain”.  It will ask confirmation as well.
+        `-s`  
+        : Run script with specified `name`
 
-       pads -Su
-       Update your machine.
+        `-h`  
+        : Show help for PADS and exit.
 
-       pads -Su neofetch ...
-       Install neofetch to your machine.
+        **-v`  
+        : Show version for PADS and exit
 
-       pads -Sb
-       Back up your machine locally.
+## Exit Status
 
-EXIT STATUS
-       Code   Response
-       ───────────────────────────────────
-       0      Success
-       1      Error
-       2      Illegal/Required Option
-       127    K18 (Command doesn’t exist)
-       130    Ctl+C
+| Code | Response |
+|---|---|
+| 0 | Success |
+| 1 | Error |
+| 2 | Illegal/Required Option |
+| 127 | K18 (Command doesn't exist) |
+| 130 | Ctl+C |
 
-NOTES
-       1. Man Page Updates:
+## Environment
 
-           • Created 09-8-2023
-           • Updated 09-24-2023
-           • Fixed Notes Section 20-20-2023
-           • Updated 12-03-2023
-           • Updated 12-27-2023
-           • Updated 05-13-2024
-           • Chaged Syntax 09-02-2024
-           • Changed Syntax 02-26-2025
-           • forked from original pads.1 to markdown 2025-03-20
+BROWSER="w3m"  
+PROMPT_COMMAND=prompt_command  
+RANGER_LOAD_DEFAULT=false  
+PATH=PATH:HOME/pads/bin  
 
-AUTHORS
-       Joe Corso (2022)- Creator/Main Developer
+## Directories
 
-REPORTING BUGS
-       pads.email.address@gmailmail.com?subject=PADS%20bug
+N/A
 
-COPYRIGHT
-       MIT License Copyright (c) 2022 Joe Corso
+## History
 
-       Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
-       documentation files (the “Software”), to deal in the Software without restriction, including without limita‐
-       tion  the  rights  to  use,  copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
-       Software, and to permit persons to whom the Software is furnished to do so, subject to the following  condi‐
-       tions:  The above copyright notice and this permission notice shall be included in all copies or substantial
-       portions of the Software.  THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,  EXPRESS  OR  IM‐
-       PLIED,  INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-       NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR  ANY  CLAIM,  DAMAGES  OR
-       OTHER  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-       WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+- PADS is General Purpose Artificial Intelligence designed to carry out every day business tasks. It's purpose is to provide book keeping, employee timesheets, client tracking, automation, etc. It can do double entry accounting for hybrid manufacturing companies. None of the data is loaded as Environment Variables, so your interaction with PADS is between you and it. It's original purpose was to serve as a website, with a relational historical database. Work on this project began in Python using the Django Framework on June 23, 2021 at 5:30pm. The accounting database first came online Oct. 13th, 2021 at 11:48pm. The Bash Syntax was first created by Joe Corso on May 4th, 2022. It was previously codenamed Project Eniac, to pay homage to the original project of the same name.  
+- Work began on an Arch Linux distro  
+- The original man page was created 2023-09-08  
+- Flask Project for Accounting was created  
+- Flask API was created  
+- Started using Qtile (switched from XFCE4).  
+- Created info page  
 
-SEE ALSO
-       sys, proj, tools, info pads
+## Notes
 
-pads 0.0.5                                           2025-02-26                                             PADS(1)
+- All new logic files added to ~/pads/module/ must be named by the flag or argument they represent.  
+- I wanted to following a syntax which follows the <command> <module> <argument> <option> pattern because I thought it would be easy to code and work with. It seems cryptic with one letter names, but the code is easy, and each function can have its own logic. Most of it being wrappers for more complex commands that already exist anyway, but I have a hard time remembering. I made it similar to pacman just because I liked it.
+
+## Examples
+
+`pads -Ph`  
+Show project help and exit
+
+`pads -Pps brain`  
+Start a python project named "brain"
+
+`pads -Ppm brain`  
+Make a python project named "brain". This will create a virtual env for the project as well.
+
+`pads -Ppd brain`  
+Delete the project named "brain". It will ask confirmation as well.
+
+`pads -Su`  
+Update your machine.
+
+`pads -Su neofetch`  
+Install neofetch to your machine.
+
+`pads -Sb`  
+Back up your machine locally.
+
+`pads -x`  
+Set the x flag for whatever command you need to debug.
