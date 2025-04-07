@@ -1,0 +1,34 @@
+#!/bin/bash
+
+success="Successfully installed MariaDB!"
+failure="Failed to install MariaDB!"
+randpass=$(sudo < /dev/urandom tr -dc A-Za-z0-9{\!@#$%^\&*\(\){}[]?} | head -c14; echo)
+saveFile="${pads_dir}/data/profile/sqlprofile.sh"
+x='
+[[ ! $(mariadb -V) ]] && pads -Su mariadb
+
+sudo mariadb-install-db --user=mysql --basedir=/usr --datadir="${pads_dir}/data/db"
+sudo systemctl enable mariadb.service &> /dev/null
+sudo systemctl start mariadb.service &> /dev/null
+sudo mariadb-secure-installation
+'
+printf " * Creating PADS profile \n"
+# Create Mariadb user
+sudo mariadb --user=root -e "USE mysql; CREATE USER IF NOT EXISTS 'pads'@'%' IDENTIFIED BY '${randpass}'; GRANT ALL PRIVILEGES ON *.* TO 'pads'@'%'; FLUSH PRIVILEGES;"
+
+# Install DB's from PADS dir
+for file in $(ls ${pads_dir}/utils/datasphere); do
+  [[ $? -eq 0 ]] && sudo mariadb < "${pads_dir}/utils/datasphere/${file}" 2> /dev/null && printf "[${green}INSTALLED${r}] :: ${file} \n" || printf "[${red}ERROR${r}] :: ${file} \n"
+done
+
+# Save pads profile for later
+echo "#!/bin/bash" > ${saveFile}
+echo "export DB_USER=\"${0##*/}\"" >> ${saveFile}
+echo "export DB_PASS=\"${randpass}\"" >> ${saveFile}
+echo "export SECRET_KEY=\"\$(tr -dc A-Za-z0-9 </dev/urandom | head -c 64)\"" >> "${saveFile}"
+
+# Create ENV VARS for each DB, saved to saveFile
+for i in $(sudo mariadb -e 'SHOW DATABASES WHERE `Database` NOT in ("information_schema", "performance_schema", "mysql", "sys")';); do
+  echo "export ${i^^}=\"${i}\"" | sed s/'export DATABASE="Database"'/" "/g >> ${saveFile}
+done
+#pads -Su python-mysql-connector

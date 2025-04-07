@@ -1,0 +1,110 @@
+#!/bin/bash
+
+## \version 0.0.5
+## \date 2023-06-05
+## \brief (P)roject Module
+## \desc For managing projects that are not bash
+
+## \usage proj -[p:,f:,g:,h,v] -[m,s,d] <name>
+## \option -p -[m,s,d] <name>
+##    Manage a python project
+## \option -f -[<m|s|d>] <name>
+##   Manage a flask project
+## \option -g -[<m|s|d>] <name>
+##   Manage a pygame project
+## \option -h
+##   Show usage
+## \option -v
+##   Show version
+
+## \example Flask Project:
+## \example-code bash
+##   proj -fm project
+##   proj -fs project
+## \example-description
+##   In this example we make and start a flask project called `project`.
+## \example Python Project:
+## \example-code bash
+##   proj -pm project
+##   proj -ps project
+## \example-description
+##   In this example we make and start a python project called `project`
+
+## \seealso man proj, info pads
+
+module="(P)roject Module"
+description="For managing projects that are not bash"
+version="0.0.5"
+author="Joe Corso (https://www.joecorso.com)"
+created="$(date -d '20230605')"
+docs="https://github.com/padsRepo"
+license="MIT License"
+OPTSTRING="p:,f:,g:,h,v"
+options="-[m,s,d] <name>"
+synopsis="<cmd> -[<argument>] -[<option>] [name...]"
+syntax="${0##*/} -[${OPTSTRING}] ${options}"
+base_dir="$(dirname "$(readlink -f "${0%/*}")")"
+
+description(){
+  cat << EOF
+ * ${module}
+ * ${description}
+ 
+EOF
+}
+
+usage(){
+  cat << EOF
+  Synopsis: $synopsis
+  Syntax: $syntax
+  Usage:
+    -p $options Manage a python project
+    -f $options Manage a flask project
+    -g $options Manage a pygame project
+    -h Show usage
+    -v Show version
+  Ex: ${0##*/} -r neofetch | ${0##*/} -u nano neofetch firefox
+  See also: man ${0##*/}, man pads, info pads, pads
+  Author: $author
+  Version: $version
+  Created: $created
+  $license
+EOF
+}
+
+manual(){
+  description
+  usage
+}
+
+while getopts $OPTSTRING arg; do
+  arg=$arg
+  opt=${OPTARG#*-}
+  name=${3:-$2}
+  case $arg in
+    p) 
+      project_dir="${BIN_DIR}/lib/${proj}"
+      template_dir="python"
+      echo "This is disabled for now line: $LINENO module: $module_dir/proj/proj"
+      exit
+      ;;
+    f) 
+      project_dir="${HOME}/srv/${proj:-$name}"
+      template_dir="flask"
+      virtualenv_dir="${HOME}/env/flask"
+      echo $virtualenv_dir $opt
+      ;;
+    g) 
+      project_dir="${HOME}/games/${proj}"
+      template_dir="game"
+      virtualenv_dir="${HOME}/env/games"
+      ;;
+    h) manual; exit;;
+    v) echo $version; exit;;
+    *) echo " * ${0##*/} -${mod}h for help"; exit 2;;
+  esac
+done
+
+[[ $# -eq 0 ]] && manual  && exit 2
+. "${base_dir}/src/proj/parseopts"
+${opt}_proj

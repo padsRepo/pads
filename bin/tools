@@ -1,0 +1,91 @@
+#!/bin/bash
+
+## \version 0.0.5
+## \date 2023-06-05
+## \brief (R)un Module
+## \desc Running misc scripts. Good for testing
+
+## \usage tools -[s,v,h] [name...]
+## \option -s <name>
+##      passgen           Generate a random password
+##      note              Take a note
+##      buildpkg          Build Package to install
+##      conkystart        Start Conky panels
+##      timer <int>       Start a countdown timer for 3 seconds
+##      progress          Show a progress bar
+##      resetpath         Reset default $PATH
+## \option -h
+##   Show usage
+## \option -v
+##   Show version
+
+## \example Note taking app:
+## \example-code bash
+##   tools -s note
+## \example-description
+##   In this example we run the note taking app.
+## \example Password Generator:
+## \example-code bash
+##   tools -s passgen
+## \example-description
+##   In this example we run the password generator app.
+
+## \seealso man tools, info pads
+
+module="(R)un Module"
+description="Running misc scripts. Good for testing"
+version="0.0.3"
+author="Joe Corso (https://www.joecorso.com)"
+created="$(date -d '20230605')"
+docs="https://github.com/padsRepo"
+license="MIT License"
+packages="${@:2}"
+OPTSTRING="s,v,h"
+synopsis="<cmd> -[<argument>] -[<option>] [name...]"
+syntax="${0##*/} -[$OPTSTRING] [name...]"
+
+. "${BIN_DIR}/utils/handler/signals/pads.sig"
+
+description(){
+  cat << EOF
+ * ${module}
+ * ${description}
+ 
+EOF
+}
+
+usage(){
+  cat << EOF
+  Syntax: $syntax
+  Usage:
+   -s
+     passgen           Generate a random password
+     note              Take a note
+     buildpkg          Build Package to install
+     conkystart        Start Conky panels
+     timer <int>       Start a countdown timer for 3 seconds
+     progress          Show a progress bar
+     resetpath         Reset default \$PATH
+   -h                  Show help
+   -v                  Show version
+EOF
+}
+
+manual(){
+  description
+  usage
+}
+
+while getopts $OPTSTRING arg; do
+  opt=${OPTARG}
+  name=${3:-$2}
+  echo $opt
+  case ${arg} in
+    s) . "${BIN_DIR}/src/tools/${proj}" $OPTARG; exit;;
+    v) echo "${version}"; exit;;
+    h) manual; exit;;
+    *) echo "$OPTARG * ${0##*/} -${mod}h for help"; exit 2;;
+  esac
+done
+[[ $# -eq 0 ]] && manual  && exit 2
+

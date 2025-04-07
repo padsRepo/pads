@@ -1,0 +1,35 @@
+#!/bin/bash
+
+m_proj(){
+  success="Successfully created ${project_dir}"
+  failure="Failed to create ${project_dir}"
+  [ -d ${project_dir} ] && echo -e ${red}" * Project already exists..."${r} && exit
+  echo " * Creating Project Directory..."
+  sudo cp -r "${HOME}/templates/${template_dir}/" "${project_dir}"
+  [[ $? -gt 0 ]] && echo -e ${red}" * Something's wrong..."${r} && yes | d_proj && exit || echo -e ${green}" * DONE!"${r}
+  echo " * Changing Permissions.."
+  sudo chown -R $USER:$USER ${project_dir}
+  sudo chmod -R 0755 ${project_dir}
+}
+
+s_proj(){
+  success="Success!"
+  failure="Failure!"
+  [[ ! -d ${project_dir} ]] && echo -e ${red}" * Project doesn't exist..."${r} && exit 1
+  . "${virtualenv_dir}/bin/activate"
+  python ${project_dir}/.
+}
+
+d_proj(){
+  [[ ! -d ${project_dir} ]] && echo -e ${red}" * Project doesn't exist..."${r} && exit
+  read -p " * Delete? Y/n " confirm
+  case ${confirm} in
+    "Yes" | "yes" | "Y" | "y" | "")
+      echo " * I'm deleting ${project_dir}..."
+      sudo rm -r ${project_dir}
+      ;;
+    "No" | "no" | "N" | "n")
+      echo " * Fuck you! I did it anyway. Just kidding, I won't."
+      ;;
+  esac
+}

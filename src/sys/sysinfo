@@ -1,0 +1,65 @@
+#!/bin/bash
+
+hostname=$(uname -n)
+distro=$(grep '^NAME' /etc/os-release)
+kernal=$(uname -r)
+cpu=$(uname -p)
+cpuload=$(cat /proc/loadavg | awk '{print $1 ", " $2 ", " $3}')
+machine=$(grep "model name" "/proc/cpuinfo" | head -1 | cut -d':' -f2)
+uptime=$(uptime -p)
+iptables=$(systemctl is-active iptables)
+ip6tables=$(systemctl is-active ip6tables)
+diskuse=$(df --output=pcent / | sed 1d)
+battery=$(upower --show-info /org/freedesktop/UPower/devices/battery_BAT0 | awk '/percentage/ {print $2}')
+swap=$(free -m | tail -n 1 | awk {'print $2'})
+disk=$(df -h / | awk '{ a = $2 } END { print a }')
+freememory=$(free -m | head -n 2 | tail -n 1 | awk {'print $4'})
+freeswap=$(free -m | tail -n 1 | awk {'print $4'})
+freedisk=$(df -h / | awk '{ a = $4 } END { print a }')
+echo " * Loading Data..."
+echo "";
+echo "--File Path--";
+pwd;
+ls --color=auto;
+echo "";
+
+echo ${green}"---> Machine Info:"${r}
+echo "Desktop Env: $XDG_CURRENT_DESKTOP"
+[[ -d /usr/share/xgreeter/ ]] && echo "Current Greeter: $(ls -1 /usr/share/xsession/)" || echo "Greeter: None"
+echo "Hostname: "${hostname}
+echo "Distro: "${distro}
+echo "Kernal: "${kernal}
+echo "CPU: "${cpu}
+echo "CPU Load: "${cpuload}
+echo "Machine: "${machine}
+echo "Up Time: "${uptime}
+echo "IP Tables: "${iptables}
+echo "Disk Usage: "${diskuse}
+echo "Battery: "${battery}
+echo "Swap: "${swap}
+echo "Disk: "${disk}
+echo "Free Mem: "${freememory}
+echo "Free Swap: "${freeswap}
+echo "Free Disk: "${freedisk}
+echo ""
+
+echo ${green}"---> Software Stack:"${r}
+command -v python &> /dev/null && echo "Python: $(python --version)" || echo "Python: None"
+command -v pip &> /dev/null && echo "PIP: $(pip --version)" || echo "PIP: None"
+[[ -z $VIRTUAL_ENV ]] && echo "Virtual Env: ${red}Not Active${r}" || echo "Virtual Env: ${green}$VIRTUAL_ENV${r}"
+[[ $VIRTUAL_ENV ]] && pip list && echo "" || echo "" &> /dev/null
+command -v $(python -m django --version &> /dev/null) && echo "Django: None" || echo "Django: $(python -m django --version)"
+command -v ruby &> /dev/null && echo "Ruby: $(ruby --version)" || echo "Ruby: None"
+command -v rails &> /dev/null && echo "Rails: $(rails --version)" || echo "Rails: None"
+command -v php &> /dev/null && echo "PHP: $(php -v)" || echo "PHP: None"
+command -v heroku &> /dev/null && echo "Heroku: $(heroku --version)" || echo "Heroku: None"
+command -v git &> /dev/null && echo "Git: $(git --version)" || echo "Git: None"
+command -v mysql &> /dev/null && echo "MySQL: $(mariadb --version)" || echo "MySQL: None"
+[[ $(systemctl status nginx.service | grep "active") ]] && echo "nGINX: ${green}Active${r}" || echo "nGINX: ${red}Not Active${r}"
+[[ $(systemctl status uwsgi.service | grep "active") ]] && echo "uWSGI: ${green}Active${r}" || echo "uWSGI: ${red}Not Active${r}"
+echo ""
+
+echo ${green}"---> PADS Info:"${r}
+echo "$(whereis pads)"
+echo "PADS Version: $(pads -v)"
+echo "PADS ${created}"

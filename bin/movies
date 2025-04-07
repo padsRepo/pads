@@ -1,0 +1,29 @@
+#!/bin/bash
+param="${1}"
+baseDir="/mnt/movies"
+
+checkForFiles=$(ls "${baseDir:-*}/$param" | grep -E '\.mp4$|\.mp3$|\.avi$|\.mkv$|\.mka' | wc -l)
+if [[ $checkForFiles -gt 1 ]]; then 
+  printf " :: Checking: $baseDir/$param\n :: There are $checkForFiles files in this directory.\n :: They are:\n$(ls "$baseDir/$param")\n"
+elif [[ $checkForFiles -lt 1 ]]; then
+  printf "There are no files.\n"
+elif [[ $checkForFiles -eq 1 ]]; then
+  ogFile=$(ls "${baseDir}/$param" | grep -E '\.mp4$|\.mp3$|\.avi$|\.mkv$|\.mka')
+  printf " :: Checking: $baseDir/$param\n :: There is $checkForFiles file in this directory.\n :: It is:\n$ogFile\n"
+  read -p "Do you want this to change?(Y/n): " change
+  if [[ $change == "" ]]; then
+    #mv "$baseDir/$1/$ogFile" "$baseDir"
+    extension=${ogFile/*.}
+    file=$(echo "${ogFile%%${2}*}" | sed "s/[[:punct:]]/ /g")
+    echo "mv: $baseDir/$ogFile" "$baseDir/$file.$extension"
+    #mv "$baseDir/$ogFile" "$baseDir/$file.$extension"
+    #rm -r "$baseDir/$1"
+  else
+    echo "Nope!"
+  fi
+fi
+#    ffmpeg -i "${i}" "${album}.mka"
+#    rm "${i}"
+#    [[ ! -d "${artist}" ]] && mkdir "${artist}" && echo " * mkdir: ${artist}"
+#    [[ ! -d "${artist}/${album}" ]] && mkdir "${artist}/${album}" && echo " * mkdir: ${artist}/${album}"
+#    [[ ! -f "${artist}/${album}" ]] && mv "${i}" "${artist}/${album_song}" && echo "mv: ${i} --> ${artist}/${album}"

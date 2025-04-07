@@ -1,0 +1,13 @@
+#!/bin/bash
+
+usage(){
+ echo -e " * Set a countdown in seconds.\n * Syntax: timer <int>"
+}
+total=$1
+for i in $(seq 1 $total); do
+  percent=$(( (i * $total) / $total ))
+  #  printf "$percent%%[$red$(printf '#%.0s' $(seq 1 $percent))$r]\r"
+  printf "\r[%-${total}s] %d/$total" "$(printf '*%.0s' $(seq 1 $percent))" "$percent"
+  sleep 1
+done
+echo -e ${green}"\n ===> Time's up!"${r}

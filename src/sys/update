@@ -1,0 +1,14 @@
+#!/bin/bash
+
+pkgMgr="pacman"
+[[ $(command -v yay) ]] && pkgMgr="yay"
+
+if [[ -z ${packages} ]]; then
+  echo " * Updating..."
+  ${pkgMgr} -Syu --noconfirm
+else
+  echo " * Installing ${packages}..."
+  ${pkgMgr} -Syu ${packages} --needed
+  echo " * Updating $(uname -n)_req.txt"
+  pacman -Qqen > "/mnt/docs/$(uname -n)_req.txt"
+fi

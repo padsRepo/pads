@@ -1,0 +1,193 @@
+#!/bin/bash
+
+## \author Joe Corso pads.email.address@gmail.com
+## \version 0.0.5
+## \date 2023-06-05
+## \brief This manual is for PADS (0.0.5, 2025-02-26) Personal Assistant and Deployment System
+## \desc PADS is a general purpose programming language designed to automate
+## tasks, and run complex scripts in a format that only involves a few
+## flags, and options. The first flag in the syntax is made to access logic
+## from modules which may have their own complex logic. The second flag in
+## the syntax is made to access options that may be available in those
+## modules. PADS also has robust error checking; so you can be sure not to
+## enter the wrong flags. Also see: info pads for the comprehensive guide.
+## The man page may be out of date.
+
+## \license MIT License
+## \copyright Copyright (c) 2022 Joe Corso
+## 
+## Permission is hereby granted, free of charge, to any person obtaining a
+## copy of this software and associated documentation files (the
+## "Software"), to deal in the Software without restriction, including
+## without limitation the rights to use, copy, modify, merge, publish,
+## distribute, sublicense, and/or sell copies of the Software, and to
+## permit persons to whom the Software is furnished to do so, subject to
+## the following conditions:
+## 
+## The above copyright notice and this permission notice shall be included
+## in all copies or substantial portions of the Software.
+## 
+## THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+## OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+## MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+## IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+## CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+## TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+## SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+## 
+## Documentation at [PADS Manual
+## (https://www.joecorso.com/guide)](https://www.joecorso.com/guide, "Comprehensive Guide")
+
+## \usage <cmd> -[<module>] -[<argument>] -[<option>] [name...]
+## \usage pads -S -[b,u,i,l,d,r:,m,s,h,v] [name...]
+## \usage pads -P -[p:,f:,g:,h,v] -[m:,s:,d-h] <name>
+## \usage pads -R -[s:,v,h] <name...>
+## \usage pads -T [-h|-v]
+## \usage pads -x
+## \usage pads -h
+## \usage pads -v
+
+## \option -x
+##   Set -x
+## \option -S
+##   (S)ystem Module
+## \option -P
+##   (P)roject Module
+## \option -R
+##   (T)ool Module
+## \option -T
+##   (T)est Module
+## \option -v
+##   Show version
+## \option -h
+##   Shoow help
+
+## \exit 0 Success
+## \exit 1 Failure
+## \exit 127 K18
+## \exit 130 Ctl+C
+
+## \env BROWSER w3m
+## \env PROMPT_COMMAND prompt_command
+## \env RANGER_LOAD_DEFAULT false
+## \env PATH $PATH:$HOME/pads/bin
+
+## \file $PATH/pads bin file
+
+## \history - PADS is General Purpose Artificial Intelligence designed to carry
+##    out every day business tasks. It's purpose is to provide book
+##    keeping, employee timesheets, client tracking, automation, etc. It
+##    can do double entry accounting for hybrid manufacturing companies.
+##    None of the data is loaded as Environment Variables, so your
+##    interaction with PADS is between you and it. It's original purpose
+##    was to serve as a website, with a relational historical database.
+##    Work on this project began in Python using the Django Framework on
+##    June 23, 2021 at 5:30pm. The accounting database first came online
+##    Oct. 13th, 2021 at 11:48pm. The Bash Syntax was first created by Joe
+##    Corso on May 4th, 2022. It was previously codenamed Project Eniac,
+##    to pay homage to the original project of the same name.
+## \history - Work began on an Arch Linux distro
+## \history - The original man page was created 2023-09-08
+## \history - Flask Project for Accounting was created
+## \history - Flask API was created\
+## \history - Started using Qtile (switched from XFCE4).
+## \history - Created info page
+
+## \note - All new logic files added to \~/pads/module/ must be named by the
+##    flag or argument they represent.
+## \note - I wanted to following a syntax which follows the `<command>`
+##    `<module>` `<argument>` `<option>` pattern
+##    because I thought it would be easy to code and work with. It seems
+##    cryptic with one letter names, but the code is easy, and each
+##    function can have its own logic. Most of it being wrappers for more
+##    complex commands that already exist anyway, but I have a hard time
+##    remembering. I made it similar to pacman just because I liked it.
+
+## \example Start a Flask Project:
+## \example-code bash
+##   pads -Pfm project
+##   pads -Pfs project
+## \example-description
+##   In this example we make and start a Flask project named `project`.
+## \example Update your machine:
+## \example-code bash
+##   pads -Su
+## \example-description
+##   In this example we just update the system and enter the password.
+## \example Install a package:
+## \example-code bash
+##   pads -Su neofetch ...
+## \example-description
+##   In this example we install as many packages as we want seperated by spaces.
+##   You can use `pacman` or `yay`.
+
+## \seealso sys, proj, tools, man pads, info pads
+
+failure="I can't do that..."
+module="PADS"
+description="Personal Assistant and Deployment System"
+author="Joe Corso (https://www.joecorso.com)"
+created="$(date -d '20230605')"
+version="0.0.5"
+docs="https://github.com/padsRepo"
+license="MIT License"
+OPTSTRING="S:,P:,R:,T,x,v,h"
+synopsis="<cmd> -[<module>] -[<argument>] -[<option>] [name...]"
+syntax="${0##*/} -[${OPTSTRING}] -[arg]"
+base_dir="$(dirname "$(readlink -f "${0%/*}")")"
+
+. "${base_dir}/handler/signals/pads.sig"
+
+description(){
+  cat << EOF
+ * ${module}
+ * ${description}
+ 
+EOF
+}
+
+usage(){
+  cat << EOF
+  Synopsis: $synopsis
+  Syntax: $syntax
+  Usage:
+    -S [-h] System Module
+    -P [-h] Project Module
+    -R [-h] Utilities Module
+    -T [-h] Test Module
+    -x      Set -x
+    -v      Show Version
+    -h      Show Usage
+
+  Ex: pads -Pfs <flaskproject> | pads -Su nano neofetch firefox
+  See also: sys, proj, tools, man pads, info pads
+  Author: $author
+  Version: $version
+  Created: $created
+  $license
+EOF
+}
+
+manual(){
+  description
+  usage
+}
+
+while getopts ${OPTSTRING} mod; do
+  case ${mod} in
+    x) set -$mod;;
+    S) cmd="sys"; arg=$OPTARG;;
+    P) cmd="proj"; arg=$OPTARG; export proj=$2;;
+    R) cmd="tools"; export arg=$OPTARG; export proj=$2;;
+    T)
+      echo T $synopsis
+      exit
+      ;;
+    v) echo "${version}"; exit;;
+    h) usage; exit;;
+    ?) echo " * pads -h for help"; exit 2;;
+    *) echo "K18 Error"; exit 2;;
+  esac
+done
+[[ $# -eq 0 ]] && manual && exit
+$cmd -$arg

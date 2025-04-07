@@ -1,0 +1,11 @@
+#!/bin/bash
+
+total=$1
+for i in $(seq 1 100); do
+  percent=$(( (i * $total) / 100 ))
+#  printf "$percent%%[$red$(printf '#%.0s' $(seq 1 $percent))$r]\r"
+  [[ $percent -gt 75 ]] && printf "$green\r[%-${total}s] %d%%$r" "$(printf '*%.0s' $(seq 1 $percent))" "$percent"
+  [[ $percent -lt 75 ]] && printf "$red\r[%-${total}s] %d%%$r" "$(printf '*%.0s' $(seq 1 $percent))" "$percent"
+  sleep 0.1
+done
+echo ""

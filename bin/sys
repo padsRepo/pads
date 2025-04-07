@@ -1,0 +1,103 @@
+#!/bin/bash
+
+## \version 0.0.5
+## \date 2023-06-05
+## \brief (S)ystem Module
+## \desc Running system commands on your machine.
+
+## \usage sys -[b,u,i,l,d,r:,m,s,h,v] [name...]
+
+## \option -b
+## Backup System
+## \option -u [name...]
+## Update machine. Supply name of package to install.
+## \option -i
+## Update pads' info page
+## \option -l
+## List packages on this machine
+## \option -
+
+## \example Update your machine:
+## \example-code bash
+##   sys -u
+## \example-description
+##   In this example we just update the system and enter the password.
+## \example Install a package:
+## \example-code bash
+##   sys -u neofetch ...
+## \example-description
+##   In this example we install as many packages as we want seperated by spaces.
+##   You can use `pacman` or `yay`.
+
+## \seealso man sys, info pads
+
+module="(S)ystem Module"
+description="Running system commands on your machine."
+version="0.0.5"
+author="Joe Corso (https://www.joecorso.com)"
+created="$(date -d '20230605')"
+docs="https://github.com/padsRepo"
+license="MIT License"
+packages="${@:2}"
+OPTSTRING="b,u,i,l,d,r:,m,s,h,v"
+synopsis="<cmd> -[<argument>] -[<option>] [name...]"
+syntax="${0##*/} -[$OPTSTRING] [name...]"
+base_dir="$(dirname "$(readlink -f "${0%/*}")")"
+
+. "${base_dir}/handler/signals/pads.sig"
+
+description(){
+  cat << EOF
+ * ${module}
+ * ${description}
+ 
+EOF
+}
+
+usage(){
+ cat << EOF
+ Synopsis: ${synopsis}
+ Syntax: ${syntax}
+ Usage:
+   -b           Backup System
+   -u [name...] Update machine. Supply name of package to install.
+   -i           Update pads' info page
+   -l           List packages on this machine
+   -d           Update pads' man page
+   -r <name...> Remove supplied packages
+   -m           Set up mariadb
+   -s           Show system information
+   -h           Show help
+   -v           Show version
+  Ex: ${0##*/} -r neofetch | ${0##*/} -u nano neofetch firefox
+  See also: man ${0##*/}, man pads, info pads, pads
+  Author: $author
+  Version: $version
+  Created: $created
+  $license
+EOF
+}
+  
+manual(){
+  description
+  usage
+}
+  
+while getopts $OPTSTRING name; do
+  arg=$name
+  case $arg in
+    b) function="backup";;
+    u) function="update";;
+    i) function="updateinfo";;
+    l) pacman -Qqen; exit;;
+    d) function="updateman";;
+    r) sudo pacman -Rcns $packages; exit;;
+    m) function="setupmariadb";;
+    s) function="sysinfo";;
+    h) usage; exit;;
+    v) echo "$version"; exit;;
+    ?) echo " * ${0##*/} -${mod}${arg}h for help"; exit 2;;
+  esac
+done
+[[ -z $arg ]] && manual  && exit 2
+. "${base_dir}/src/sys/${function}"

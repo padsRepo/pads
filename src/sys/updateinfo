@@ -1,0 +1,46 @@
+#!/bin/bash
+
+cd "/mnt/docs/pads/"
+pandoc src_docs/info/*.md -o pads.texi
+pandoc -s --toc --number-sections --metadata pagetitle="Docs" src_docs/info/*.md -o index.html
+pandoc -s --toc --number-sections --metadata pagetitle="Docs" src_docs/info/*.md -o print/pads.pdf
+makeinfo pads.texi
+gzip -fv pads.info
+cp pads.info.gz /usr/share/info
+cp index.html "$HOME/pads/utils/interlink/src/interlink/templeton/templates/guide/"
+cp index.html "$HOME/pads/env/flask/lib/python3.13/site-packages/interlink/templeton/templates/guide/"
+python -m mkdocs build -f interlink_mkdocs.yml -t readthedocs
+#makeinfo --html --css-include <css file> -o <output file> pads.texi
+#echo " * Converting pads.texi -> pads.info"
+#cd "/mnt/docs/pads/info/"
+#cp -v "pads.texi" "/mnt/storage/archive/pads_backup"
+#echo "@set VERSION $(pads -v)" > version.texi
+#echo "@set UPDATED $(date '+%d %B %Y')" >> version.texi
+#echo "@set UPDATED-MONTH $(date '+%B')" >> version.texi
+#x=$(pads -h | grep "Synopsis:")
+#echo "@set SYNOPSIS${x#*:}">> version.texi
+#x=$(pads -h | grep "Syntax:")
+#echo "@set SYNTAX${x#*:}">> version.texi
+#x=$(pads -Sh | grep "Syntax:")
+#echo "@set S_SYNTAX${x#*:}">> version.texi
+#x=$(pads -Ph | grep "Syntax:")
+#echo "@set P_SYNTAX${x#*:}">> version.texi
+#x=$(pads -Rh | grep "Syntax:")
+#echo "@set R_SYNTAX${x#*:}">> version.texi
+#echo "@set @inlineifset {S_USAGE, $(pads -Sh)}" >> version.texi
+#echo -e "@example \n\n$(pads -h)\n@end example" > padscli.texi
+#echo -e "@example \n$(pads -Sh) \n\n$(pads -Ph) \n\n$(pads -Rh)\n@end example" > clisyntax.texi
+#echo -e "@example \n$(tree -L 1 ${BIN_DIR})\n@end example" > dir.texi
+#sed -i s/"${USER}"/"user"/ dir.texi
+#sudo makeinfo "pads.texi"
+#echo " * Copying pads.info -> /usr/share/info"
+#sudo cp -vr "pads.info" "/usr/share/info/"
+#sudo cp -vr "pads.info" "/mnt/storage/archive"
+#sudo cp -vr "pads.info" "/mnt/storage/repo"
+#echo " * Compressing pads.info..."
+#sudo gzip -fv "/usr/share/info/pads.info"
+#echo " * Converting to HTML..."
+#sudo makeinfo --html -o "${BIN_DIR}/env/flask/lib/python3.13/site-packages/interlink/templeton/templates/guide/" "pads.texi"
+#sudo makeinfo --html -o "${BIN_DIR}/utils/interlink/src/interlink/templeton/templates/guide" "pads.texi"
+#sudo makeinfo --html -o "/mnt/docs/pads/web" "pads.texi"
+#sudo makeinfo --plaintext pads.texi > "/mnt/docs/pads/print/padsInfo.txt"

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+srcDir="/mnt/docs/pads/src_docs/man"
+manDir="/mnt/docs/pads/man"
+webDir="/mnt/docs/pads/web"
+printDir="/mnt/docs/pads/print"
+
+[[ ! -d "/usr/local/man/man1" ]] && sudo mkdir "/usr/local/man/man1" && sudo chmod -R 0775 /usr/local/man
+cd "${srcDir}"
+pandoc ${packages}.1.md -s -t man -o ${packages}.1
+echo " * Copying ${packages}.1"
+sudo cp -vr "./${packages}.1" "${manDir}"
+echo " * Compressing ${packages}.1"
+sudo gzip -fv "./${packages}.1"
+sudo mv -v "./${packages}.1.gz" "/usr/local/man/man1"
+echo " * Converting to HTML..."
+pandoc "${packages}.1.md" -f markdown -t html -s -o "${webDir}/man_${packages}.html"
+cp -vr "${webDir}/man_${packages}.html" "${BIN_DIR}/utils/interlink/src/interlink/templeton/templates/guide/"
+echo " * Converting to PDF..."
+pandoc "${packages}.1.md" -f markdown -t pdf -s -o "${printDir}/man_${packages}.pdf"
