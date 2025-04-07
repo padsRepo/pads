@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="None">
+        
+        
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <title>PADS</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/fontawesome.min.css" rel="stylesheet">
+        <link href="css/brands.min.css" rel="stylesheet">
+        <link href="css/solid.min.css" rel="stylesheet">
+        <link href="css/v4-font-face.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="assets/_mkdocstrings.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body class="homepage">
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href=".">PADS</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#pads" class="nav-link">pads</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#sys" class="nav-link">sys</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#proj" class="nav-link">proj</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-bs-level="1"><a href="#tools" class="nav-link">tools</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="pads">pads</h1>
+  <p>This manual is for PADS (0.0.5, 2025-02-26) Personal Assistant and Deployment System</p>
+
+  <strong>Usage</strong>
+    <pre><code>&lt;cmd&gt; -[&lt;module&gt;] -[&lt;argument&gt;] -[&lt;option&gt;] [name...]</code></pre>
+    <pre><code>pads -S -[b,u,i,l,d,r:,m,s,h,v] [name...]</code></pre>
+    <pre><code>pads -P -[p:,f:,g:,h,v] -[m:,s:,d-h] &lt;name&gt;</code></pre>
+    <pre><code>pads -R -[s:,v,h] &lt;name...&gt;</code></pre>
+    <pre><code>pads -T [-h|-v]</code></pre>
+    <pre><code>pads -x</code></pre>
+    <pre><code>pads -h</code></pre>
+    <pre><code>pads -v</code></pre>
+
+  <strong>Description</strong>
+      <p>PADS is a general purpose programming language designed to automate
+tasks, and run complex scripts in a format that only involves a few
+flags, and options. The first flag in the syntax is made to access logic
+from modules which may have their own complex logic. The second flag in
+the syntax is made to access options that may be available in those
+modules. PADS also has robust error checking; so you can be sure not to
+enter the wrong flags. Also see: info pads for the comprehensive guide.
+The man page may be out of date.</p>
+
+
+  <strong>Options</strong>
+    <ul>
+        <li>
+<code class="option_short">-x</code>:
+          <div class="doc doc-md-description">
+            <p>Set -x</p>
+          </div>
+        </li>
+        <li>
+<code class="option_short">-S</code>:
+          <div class="doc doc-md-description">
+            <p>(S)ystem Module</p>
+          </div>
+        </li>
+        <li>
+<code class="option_short">-P</code>:
+          <div class="doc doc-md-description">
+            <p>(P)roject Module</p>
+          </div>
+        </li>
+        <li>
+<code class="option_short">-R</code>:
+          <div class="doc doc-md-description">
+            <p>(T)ool Module</p>
+          </div>
+        </li>
+        <li>
+<code class="option_short">-T</code>:
+          <div class="doc doc-md-description">
+            <p>(T)est Module</p>
+          </div>
+        </li>
+        <li>
+<code class="option_short">-v</code>:
+          <div class="doc doc-md-description">
+            <p>Show version</p>
+          </div>
+        </li>
+        <li>
+<code class="option_short">-h</code>:
+          <div class="doc doc-md-description">
+            <p>Shoow help</p>
+          </div>
+        </li>
+    </ul>
+
+  <strong>Environment Variables</strong>
+    <ul>
+      <li>
+        <em><code>BROWSER</code></em>:
+        <div class="doc doc-md-description">
+          <p>w3m</p>
+        </div>
+      </li>
+      <li>
+        <em><code>PROMPT_COMMAND</code></em>:
+        <div class="doc doc-md-description">
+          <p>prompt_command</p>
+        </div>
+      </li>
+      <li>
+        <em><code>RANGER_LOAD_DEFAULT</code></em>:
+        <div class="doc doc-md-description">
+          <p>false</p>
+        </div>
+      </li>
+      <li>
+        <em><code>PATH</code></em>:
+        <div class="doc doc-md-description">
+          <p>$PATH:$HOME/pads/bin</p>
+        </div>
+      </li>
+  </ul>
+
+
+  <strong>Files</strong>
+    <ul>
+      <li>
+        <em><code></code></em>:
+        <div class="doc doc-md-description">
+          <p>$PATH/pads bin file</p>
+        </div>
+      </li>
+  </ul>
+
+
+  <strong>Exit Status</strong>
+    <ul>
+      <li>
+        <em><code></code></em>:
+        <div class="doc doc-md-description">
+          <p>Success</p>
+        </div>
+      </li>
+      <li>
+        <em><code></code></em>:
+        <div class="doc doc-md-description">
+          <p>Failure</p>
+        </div>
+      </li>
+      <li>
+        <em><code></code></em>:
+        <div class="doc doc-md-description">
+          <p>K18</p>
+        </div>
+      </li>
+      <li>
+        <em><code></code></em>:
+        <div class="doc doc-md-description">
+          <p>Ctl+C</p>
+        </div>
+      </li>
+  </ul>
+
+
+
+
+
+
+  <strong>Examples</strong>
+    <em><p>Start a Flask Project:</p></em>
+<div class="highlight"><pre><span></span><code>pads<span class="w"> </span>-Pfm<span class="w"> </span>project
+pads<span class="w"> </span>-Pfs<span class="w"> </span>project
+</code></pre></div>      <p>In this example we make and start a Flask project named <code>project</code>.</p>
+    <em><p>Update your machine:</p></em>
+<div class="highlight"><pre><span></span><code>pads<span class="w"> </span>-Su
+</code></pre></div>      <p>In this example we just update the system and enter the password.</p>
+    <em><p>Install a package:</p></em>
+<div class="highlight"><pre><span></span><code>pads<span class="w"> </span>-Su<span class="w"> </span>neofetch<span class="w"> </span>...
+</code></pre></div>      <p>In this example we install as many packages as we want seperated by spaces.
+  You can use <code>pacman</code> or <code>yay</code>.</p>
+
+
+
+
+  <strong>Authors</strong>
+      <p>Joe Corso pads.email.address@gmail.com</p>
+
+
+  <strong>Copyright</strong>
+      <p>Copyright (c) 2022 Joe Corso</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<p>Documentation at <a href="https://www.joecorso.com/guide," title="Comprehensive Guide">PADS Manual
+(https://www.joecorso.com/guide)</a></p>
+
+
+  <strong>License</strong>
+      <p>MIT License</p>
+
+
+  <strong>History</strong>
+      <ul>
+<li>PADS is General Purpose Artificial Intelligence designed to carry
+   out every day business tasks. It's purpose is to provide book
+   keeping, employee timesheets, client tracking, automation, etc. It
+   can do double entry accounting for hybrid manufacturing companies.
+   None of the data is loaded as Environment Variables, so your
+   interaction with PADS is between you and it. It's original purpose
+   was to serve as a website, with a relational historical database.
+   Work on this project began in Python using the Django Framework on
+   June 23, 2021 at 5:30pm. The accounting database first came online
+   Oct. 13th, 2021 at 11:48pm. The Bash Syntax was first created by Joe
+   Corso on May 4th, 2022. It was previously codenamed Project Eniac,
+   to pay homage to the original project of the same name.</li>
+</ul>
+    <ul>
+<li>Work began on an Arch Linux distro</li>
+</ul>
+    <ul>
+<li>The original man page was created 2023-09-08</li>
+</ul>
+    <ul>
+<li>Flask Project for Accounting was created</li>
+</ul>
+    <ul>
+<li>Flask API was created\</li>
+</ul>
+    <ul>
+<li>Started using Qtile (switched from XFCE4).</li>
+</ul>
+    <ul>
+<li>Created info page</li>
+</ul>
+
+
+  <strong>Notes</strong>
+      <ul>
+<li>All new logic files added to \~/pads/module/ must be named by the
+   flag or argument they represent.</li>
+</ul>
+    <ul>
+<li>I wanted to following a syntax which follows the <code>&lt;command&gt;</code>
+   <code>&lt;module&gt;</code> <code>&lt;argument&gt;</code> <code>&lt;option&gt;</code> pattern
+   because I thought it would be easy to code and work with. It seems
+   cryptic with one letter names, but the code is easy, and each
+   function can have its own logic. Most of it being wrappers for more
+   complex commands that already exist anyway, but I have a hard time
+   remembering. I made it similar to pacman just because I liked it.</li>
+</ul>
+
+
+  <strong>See Also</strong>
+      <p>sys, proj, tools, man pads, info pads</p>
+
+
+
+
+<h1 id="sys">sys</h1>
+  <p>(S)ystem Module</p>
+
+  <strong>Usage</strong>
+    <pre><code>sys -[b,u,i,l,d,r:,m,s,h,v] [name...]</code></pre>
+
+  <strong>Description</strong>
+      <p>Running system commands on your machine.</p>
+
+
+  <strong>Options</strong>
+    <ul>
+        <li>
+<code class="option_short">-b</code>:
+          <div class="doc doc-md-description">
+            <p>Backup System</p>
+          </div>
+        </li>
+        <li>
+<code class="option_short">-u</code><code>[name...]</code>:
+          <div class="doc doc-md-description">
+            <p>Update machine. Supply name of package to install.</p>
+          </div>
+        </li>
+        <li>
+<code class="option_short">-i</code>:
+          <div class="doc doc-md-description">
+            <p>Update pads' info page</p>
+          </div>
+        </li>
+        <li>
+<code class="option_short">-l</code>:
+          <div class="doc doc-md-description">
+            <p>List packages on this machine</p>
+          </div>
+        </li>
+        <li>
+<code>-</code>:
+          <div class="doc doc-md-description">
+            
+          </div>
+        </li>
+    </ul>
+
+
+
+
+
+
+
+
+  <strong>Examples</strong>
+    <em><p>Update your machine:</p></em>
+<div class="highlight"><pre><span></span><code>sys<span class="w"> </span>-u
+</code></pre></div>      <p>In this example we just update the system and enter the password.</p>
+    <em><p>Install a package:</p></em>
+<div class="highlight"><pre><span></span><code>sys<span class="w"> </span>-u<span class="w"> </span>neofetch<span class="w"> </span>...
+</code></pre></div>      <p>In this example we install as many packages as we want seperated by spaces.
+  You can use <code>pacman</code> or <code>yay</code>.</p>
+
+
+
+
+
+
+
+
+
+  <strong>See Also</strong>
+      <p>man sys, info pads</p>
+
+
+
+
+<h1 id="proj">proj</h1>
+  <p>(P)roject Module</p>
+
+  <strong>Usage</strong>
+    <pre><code>proj -[p:,f:,g:,h,v] -[m,s,d] &lt;name&gt;</code></pre>
+
+  <strong>Description</strong>
+      <p>For managing projects that are not bash</p>
+
+
+  <strong>Options</strong>
+    <ul>
+        <li>
+<code class="option_short">-p</code><code>-[m,s,d] &lt;name&gt;</code>:
+          <div class="doc doc-md-description">
+            <p>Manage a python project</p>
+          </div>
+        </li>
+        <li>
+<code class="option_short">-f</code><code>-[&lt;m|s|d&gt;] &lt;name&gt;</code>:
+          <div class="doc doc-md-description">
+            <p>Manage a flask project</p>
+          </div>
+        </li>
+        <li>
+<code class="option_short">-g</code><code>-[&lt;m|s|d&gt;] &lt;name&gt;</code>:
+          <div class="doc doc-md-description">
+            <p>Manage a pygame project</p>
+          </div>
+        </li>
+        <li>
+<code class="option_short">-h</code>:
+          <div class="doc doc-md-description">
+            <p>Show usage</p>
+          </div>
+        </li>
+        <li>
+<code class="option_short">-v</code>:
+          <div class="doc doc-md-description">
+            <p>Show version</p>
+          </div>
+        </li>
+    </ul>
+
+
+
+
+
+
+
+
+  <strong>Examples</strong>
+    <em><p>Flask Project:</p></em>
+<div class="highlight"><pre><span></span><code>proj<span class="w"> </span>-fm<span class="w"> </span>project
+proj<span class="w"> </span>-fs<span class="w"> </span>project
+</code></pre></div>      <p>In this example we make and start a flask project called <code>project</code>.</p>
+    <em><p>Python Project:</p></em>
+<div class="highlight"><pre><span></span><code>proj<span class="w"> </span>-pm<span class="w"> </span>project
+proj<span class="w"> </span>-ps<span class="w"> </span>project
+</code></pre></div>      <p>In this example we make and start a python project called <code>project</code></p>
+
+
+
+
+
+
+
+
+
+  <strong>See Also</strong>
+      <p>man proj, info pads</p>
+
+
+
+
+<h1 id="tools">tools</h1>
+  <p>(R)un Module</p>
+
+  <strong>Usage</strong>
+    <pre><code>tools -[s,v,h] [name...]</code></pre>
+
+  <strong>Description</strong>
+      <p>Running misc scripts. Good for testing</p>
+
+
+  <strong>Options</strong>
+    <ul>
+        <li>
+<code class="option_short">-s</code><code>&lt;name&gt;</code>:
+          <div class="doc doc-md-description">
+            <pre><code> passgen           Generate a random password
+ note              Take a note
+ buildpkg          Build Package to install
+ conkystart        Start Conky panels
+ timer &lt;int&gt;       Start a countdown timer for 3 seconds
+ progress          Show a progress bar
+ resetpath         Reset default $PATH
+</code></pre>
+          </div>
+        </li>
+        <li>
+<code class="option_short">-h</code>:
+          <div class="doc doc-md-description">
+            <p>Show usage</p>
+          </div>
+        </li>
+        <li>
+<code class="option_short">-v</code>:
+          <div class="doc doc-md-description">
+            <p>Show version</p>
+          </div>
+        </li>
+    </ul>
+
+
+
+
+
+
+
+
+  <strong>Examples</strong>
+    <em><p>Note taking app:</p></em>
+<div class="highlight"><pre><span></span><code>tools<span class="w"> </span>-s<span class="w"> </span>note
+</code></pre></div>      <p>In this example we run the note taking app.</p>
+    <em><p>Password Generator:</p></em>
+<div class="highlight"><pre><span></span><code>tools<span class="w"> </span>-s<span class="w"> </span>passgen
+</code></pre></div>      <p>In this example we run the password generator app.</p>
+
+
+
+
+
+
+
+
+
+  <strong>See Also</strong>
+      <p>man tools, info pads</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = ".",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="js/base.js"></script>
+
+        <div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 1.6.1
+Build Date UTC : 2025-04-07 19:20:16.476269+00:00
+-->
