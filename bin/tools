@@ -1,36 +1,81 @@
 #!/bin/bash
 
-## \version 0.0.5
-## \date 2023-06-05
-## \brief (R)un Module
-## \desc Running misc scripts. Good for testing
+## title (R)un Module
+## subtitle Running misc scripts. Good for testing
+## author Joe Corso
+## email pads.email.address@gmail.com
+## version 0.0.3
+## created 2023-06-05
+## repoURL https://github.com/padsRepo/pads
+## docsURL https://github.com/padsRepo/pads/wiki
+## blogURL https://padsrepo.github.io/pads/
+## brief This manual is for TOOLS (0.0.5, 2025-02-26) A module made for PADS
 
-## \usage tools -[s,v,h] [name...]
-## \option -s <name>
-##      passgen           Generate a random password
-##      note              Take a note
-##      buildpkg          Build Package to install
-##      conkystart        Start Conky panels
-##      timer <int>       Start a countdown timer for 3 seconds
-##      progress          Show a progress bar
-##      resetpath         Reset default $PATH
-## \option -h
-##   Show usage
-## \option -v
-##   Show version
+## desc 
+## The purpose of this module is to run random scripts on your machine.
+## end desc
 
-## \example Note taking app:
-## \example-code bash
-##   tools -s note
-## \example-description
-##   In this example we run the note taking app.
-## \example Password Generator:
-## \example-code bash
-##   tools -s passgen
-## \example-description
-##   In this example we run the password generator app.
+## license MIT License
+## copyright
+## Copyright (c) 2022 Joe Corso
+## 
+## Permission is hereby granted, free of charge, to any person obtaining a
+## copy of this software and associated documentation files (the
+## "Software"), to deal in the Software without restriction, including
+## without limitation the rights to use, copy, modify, merge, publish,
+## distribute, sublicense, and/or sell copies of the Software, and to
+## permit persons to whom the Software is furnished to do so, subject to
+## the following conditions:
+## 
+## The above copyright notice and this permission notice shall be included
+## in all copies or substantial portions of the Software.
+## 
+## THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+## OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+## MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+## IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+## CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+## TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+## SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+## end copyright
 
-## \seealso man tools, info pads
+## history 
+## - 2025-04-10 This module became it's own command 
+## end history
+
+## note
+## - I probably dont need this
+## end note
+
+## env
+## None | N/A
+## end env
+
+## exit 
+## 0 | Success
+## 1 | Failure
+## 127 | K18
+## 130 | Ctl+C
+## end exit
+
+## file 
+## \$HOME/pads/bin/tools | Executable Directory
+## \$HOME/pads/src/tools/<function> | Source Code Directory
+## \$HOME/pads/handler/signales/pads.sig | Directory for signal handlers
+## end file
+
+## example
+## `tools -s genpass`
+## : In this example we generate a random password.
+
+## `tools -s timer 10`
+## : In this example we start a countdown timer for 10 seconds.
+
+## `tools -s note`
+## : In this example we start the note taking app.
+## end example
+
+## seealso info pads
 
 module="(R)un Module"
 description="Running misc scripts. Good for testing"
@@ -43,8 +88,9 @@ packages="${@:2}"
 OPTSTRING="s,v,h"
 synopsis="<cmd> -[<argument>] -[<option>] [name...]"
 syntax="${0##*/} -[$OPTSTRING] [name...]"
+base_dir="$(dirname "$(readlink -f "${0%/*}")")"
 
-. "${BIN_DIR}/utils/handler/signals/pads.sig"
+. "${base_dir}/handler/signals/pads.sig"
 
 description(){
   cat << EOF
@@ -79,10 +125,9 @@ manual(){
 while getopts $OPTSTRING arg; do
   opt=${OPTARG}
   name=${3:-$2}
-  echo $opt
   case ${arg} in
-    s) . "${BIN_DIR}/src/tools/${proj}" $OPTARG; exit;;
-    v) echo "${version}"; exit;;
+    s) . "${base_dir}/src/tools/${name}" $OPTARG; exit;;
+    v) echo "$version"; exit;;
     h) manual; exit;;
     *) echo "$OPTARG * ${0##*/} -${mod}h for help"; exit 2;;
   esac

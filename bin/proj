@@ -1,36 +1,85 @@
 #!/bin/bash
 
-## \version 0.0.5
-## \date 2023-06-05
-## \brief (P)roject Module
-## \desc For managing projects that are not bash
+## title (P)roject Module
+## subtitle For managing projects that are not bash
+## author Joe Corso
+## email pads.email.address@gmail.com
+## version 0.0.5
+## created 2023-06-05
+## repoURL https://github.com/padsRepo/pads
+## docsURL https://github.com/padsRepo/pads/wiki
+## blogURL https://padsrepo.github.io/pads/
+## brief This manual is for PROJ (0.0.5, 2025-02-26) A module made for PADS
 
-## \usage proj -[p:,f:,g:,h,v] -[m,s,d] <name>
-## \option -p -[m,s,d] <name>
-##    Manage a python project
-## \option -f -[<m|s|d>] <name>
-##   Manage a flask project
-## \option -g -[<m|s|d>] <name>
-##   Manage a pygame project
-## \option -h
-##   Show usage
-## \option -v
-##   Show version
+## desc 
+## The purpose of this module is to automate project management on your machine.
+## It should build, start, delete and manage the a virual env, projects from differents languages
+## and web frameworks.
+## end desc
 
-## \example Flask Project:
-## \example-code bash
-##   proj -fm project
-##   proj -fs project
-## \example-description
-##   In this example we make and start a flask project called `project`.
-## \example Python Project:
-## \example-code bash
-##   proj -pm project
-##   proj -ps project
-## \example-description
-##   In this example we make and start a python project called `project`
+## license MIT License
+## copyright
+## Copyright (c) 2022 Joe Corso
+## 
+## Permission is hereby granted, free of charge, to any person obtaining a
+## copy of this software and associated documentation files (the
+## "Software"), to deal in the Software without restriction, including
+## without limitation the rights to use, copy, modify, merge, publish,
+## distribute, sublicense, and/or sell copies of the Software, and to
+## permit persons to whom the Software is furnished to do so, subject to
+## the following conditions:
+## 
+## The above copyright notice and this permission notice shall be included
+## in all copies or substantial portions of the Software.
+## 
+## THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+## OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+## MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+## IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+## CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+## TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+## SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+## end copyright
 
-## \seealso man proj, info pads
+## history 
+## - 2025-04-10 This module became it's own command 
+## - 2025-04-10 Added self generating documentation
+## end history
+
+## env
+## \$project_dir | "\${BIN_DIR}/lib/\${proj}" "\${HOME}/srv/\${proj:-\$name}" "\${HOME}/games/\${proj}"
+## \$template_dir | "python" "flask" "game"
+## end env
+
+## exit 
+## 0 | Success
+## 1 | Failure
+## 127 | K18
+## 130 | Ctl+C
+## end exit
+
+## file 
+## \$HOME/pads/bin/proj | Executable Directory
+## \$HOME/pads/src/proj/parseopts | Source Code Directory
+## \$HOME/pads/handler/signales/pads.sig | Directory for signal handlers
+## end file
+
+## note
+## - This cmd needs to do more things managing virtual envs
+## end note
+
+## example
+## `proj -fm project && proj -fs project`
+## : In this example we make and start a Flask project named `project`.
+
+## `proj -d project`
+## : In this example we the project named `project`.
+
+## `proj -e flask`
+## : In this example we manage the virtual environment name `flask`.
+## end example
+
+## seealso info pads
 
 module="(P)roject Module"
 description="For managing projects that are not bash"
