@@ -21,6 +21,194 @@ I think it would be simple enough to make my own self-documenting code using the
 
 ## Day 1: 2025-04-08
 
+First of all, this is the template we are going to work with, so we can visualize the workflow:
+
+  ~~~bash
+  #!/bin/bash
+
+  ## title PADS
+  ## subtitle Personal Assistant and Deployment System
+  ## author Joe Corso
+  ## email pads.email.address@gmail.com
+  ## version 0.0.6
+  ## created 2023-06-05
+  ## repoURL https://github.com/padsRepo/pads
+  ## docsURL https://github.com/padsRepo/pads/wiki
+  ## blogURL https://padsrepo.github.io/pads/
+  ## brief This manual is for PADS (0.0.6, 2025-04-09) Personal Assistant and Deployment System
+
+  ## desc 
+  ## PADS is a library of binary commands used to automate system tasks in a
+  ## format that only involes a few flags, and options. The concept of PADS is
+  ## to provide understandable feedback, and help to work through complex workflows.
+  ## PADS also has robust error checking; so you can be sure not to enter the wrong flags. 
+  ## end desc
+
+  ## license MIT License
+  ## copyright
+  ## Copyright (c) 2022 Joe Corso
+  ## 
+  ## Permission is hereby granted, free of charge, to any person obtaining a
+  ## copy of this software and associated documentation files (the
+  ## "Software"), to deal in the Software without restriction, including
+  ## without limitation the rights to use, copy, modify, merge, publish,
+  ## distribute, sublicense, and/or sell copies of the Software, and to
+  ## permit persons to whom the Software is furnished to do so, subject to
+  ## the following conditions:
+  ## 
+  ## The above copyright notice and this permission notice shall be included
+  ## in all copies or substantial portions of the Software.
+  ## 
+  ## THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+  ## OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  ## MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+  ## IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+  ## CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+  ## TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+  ## SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  ## end copyright
+
+  ## quickstart
+  ## 1) Download:
+  ##   `git clone https://github.com/padsRepo/pads`
+  ## 2) Install:
+  ##   `makepkg -si`
+  ## end quickstart
+
+  ## exit 
+  ## 0 | Success
+  ## 1 | Failure
+  ## 127 | K18
+  ## 130 | Ctl+C
+  ## end exit
+
+  ## env 
+  ## BROWSER | w3m
+  ## PROMPT_COMMAND | prompt_command
+  ## RANGER_LOAD_DEFAULT | false
+  ## PATH | \$PATH:\$HOME/pads/bin
+  ## EDITOR | /usr/bin/nano -l -m
+  ## trap | SIGINT EXIT ERR QUIT
+  ## end env
+
+  ## file 
+  ## \$HOME/pads/bin/pads | Executable Directory
+  ## \$HOME/pads/src | Source Code Directory
+  ## \$HOME/pads/handler/signales/pads.sig | Directory for signal handlers
+  ## end file
+
+  ## history 
+  ## - PADS is General Purpose Artificial Intelligence designed to carry
+  ##    out every day business tasks. It's purpose is to provide book
+  ##    keeping, employee timesheets, client tracking, automation, etc. It
+  ##    can do double entry accounting for hybrid manufacturing companies.
+  ##    None of the data is loaded as Environment Variables, so your
+  ##    interaction with PADS is between you and it. It's original purpose
+  ##    was to serve as a website, with a relational historical database.
+  ##    Work on this project began in Python using the Django Framework on
+  ##    June 23, 2021 at 5:30pm. The accounting database first came online
+  ##    Oct. 13th, 2021 at 11:48pm. The Bash Syntax was first created by Joe
+  ##    Corso on May 4th, 2022. It was previously codenamed Project Eniac,
+  ##    to pay homage to the original project of the same name.
+  ## - Work began on an Arch Linux distro
+  ## - The original man page was created 2023-09-08
+  ## - Flask Project for Accounting was created
+  ## - Flask API was created\
+  ## - Started using Qtile (switched from XFCE4).
+  ## - Created info page
+  ## - Started using pandoc and mkdocs for self-documenting code
+  ## - Started creating my own self-generating code, named paddocs.
+  ## - Separated each module into it's own commands within the PADS Project.
+  ## - Started documenting my work as I go.
+  ## - Organized my github to have a wiki, blog, and repo for source code.
+  ## end history
+
+  ## note
+  ## - All new logic files added to `~/pads/module/` must be named by the
+  ##    flag or argument they represent.
+  ## - I wanted to following a syntax which follows the `<command>`
+  ##    `<module>` `<argument>` `<option>` pattern
+  ##    because I thought it would be easy to code and work with. It seems
+  ##    cryptic with one letter names, but the code is easy, and each
+  ##    function can have its own logic. Most of it being wrappers for more
+  ##    complex commands that already exist anyway, but I have a hard time
+  ##    remembering. I made it similar to pacman just because I liked it.
+  ## end note
+
+  ## example
+  ## `pads -Pfm project && pads -Pfs project`
+  ## : In this example we make and start a Flask project named `project`.
+
+  ## `pads -Su`
+  ## : In this example we update the system and enter the password.
+
+  ## `pads -Su neofetch ...`
+  ## : In this example we install as many packages as we want seperated by spaces.
+  ##   You can use `pacman` or `yay`.
+  ## end example
+
+  ## seealso sys, proj, tools, man pads, info pads
+
+  title="PADS"
+  subtitle="Personal Assistant and Deployment System"
+  version="0.0.6"
+  OPTSTRING="S:,P:,R:,T,x,v,h"
+  synopsis="<cmd> -[<module>] -[<argument>] -[<option>] [name...]"
+  syntax="${0##*/} -[${OPTSTRING}] -[arg]"
+  base_dir="$(dirname "$(readlink -f "${0%/*}")")"
+
+  . "${base_dir}/handler/signals/pads.sig"
+
+  description(){
+    cat << EOF
+   * ${title}
+   * ${subtitle}
+   
+  EOF
+  }
+
+  usage(){
+    cat << EOF
+    Synopsis: $synopsis
+    Syntax: $syntax
+    Usage:
+      -S [-h] System Module
+      -P [-h] Project Module
+      -R [-h] Utilities Module
+      -T [-h] Test Module
+      -x      Set -x
+      -v      Show Version
+      -h      Show Usage
+    Ex: pads -Pfs <flaskproject> | pads -Su nano neofetch firefox
+    See also: sys, proj, tools, man pads, info pads
+  EOF
+  }
+
+  manual(){
+    description
+    usage
+  }
+
+  while getopts ${OPTSTRING} mod; do
+    case ${mod} in
+      x) set -$mod;;
+      S) cmd="sys"; arg=$OPTARG;;
+      P) cmd="proj"; arg=$OPTARG; export proj=$2;;
+      R) cmd="tools"; export arg=$OPTARG; export name=$2;;
+      T)
+        echo T $synopsis
+        exit
+        ;;
+      v) echo "${version}"; exit;;
+      h) usage; exit;;
+      ?) echo " * ${0##*/} -h for help"; exit 2;;
+      *) echo "K18 Error"; exit 2;;
+    esac
+  done
+  [[ $# -eq 0 ]] && manual && exit
+  $cmd -$arg
+  ~~~
+
 Using headers makes the string more "clean" for example:
 
   1. Searching for a variable `author` in a file named `script.sh` adds the quotes:
