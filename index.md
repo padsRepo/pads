@@ -7,8 +7,11 @@ Each entry is a snapshot of thought in motion—some polished, some raw, all rea
 
 Thanks for stepping into the process. May it serve as both reference and inspiration.
 
-#### Contents:
+#### Blog:
  + [Project Paddocs](project_paddocs.md)
  + [Website Management](website_management.md)
  + [Adventures with ChatGPT](adventures_with_chatgpt.md)
  + [Large Language Models](llm.md)
+
+#### Tutorials
+ + [Installing Arch Linux](installingarch.md)
