@@ -17,9 +17,7 @@ I want to make a simple self documenting code concept. I like the direction of m
 I think it would be simple enough to make my own self-documenting code using the same concept. Make headers in the file you're coding in, search for, and replace those headers in a markdown template that's generated from the paddocs code. Then you can use pandoc to parse the file to texi, groff, etc. You can still use mkdocs to deploy to github pages as well, just dont use the self generating concept. or make your own deployment to github pages, or the github wiki.
 
 
-# Making the Program:
-
-## Day 1: 2025-04-08
+# Day 1: 2025-04-08
 
 First of all, this is the template we are going to work with, so we can visualize the workflow:
 
@@ -281,9 +279,9 @@ The issue I'm having with following this process is that the sed nested within t
    printf "# Usage\n  $usageOpts" > $1.md
    ~~~
     
-==================================================================================================================================
-
-## Day 2: 2025-04-09
+---
+    
+# Day 2: 2025-04-09
 
 I was thinking I would just use stdout to print to a markdown file. It would be easier than trying to get this nested sed to work. Plus I won't have to make sure to carry around a template, because the code will generate the template. So let's go with that, and see where the next hiccup happens. 
 
@@ -439,7 +437,7 @@ I decided to start using the github wiki for the docs and the pages for the blog
 So basically the workflow would be to create the code with the tags. run the command. make the first wiki page, and clone it. then copy the files you want into the cloned directory. commit and push. i may not nee the readme and license for each project but i'll have the self generated code.
 Then i'll need to add a printable format and a terminal format.
 
-==================================================================================================================================
+---
 
 ## Day 3: 2025-04-10
 
@@ -585,13 +583,13 @@ So I played with it for about 2 seconds, till I remembered this generates in Mar
   
 Easy. Remember, it formats exactly like Markdown, so it'll mimmic it, so when in doubt resort to Markdown format.  
 
-==================================================================================================================================
+---
 
 ## Day 4: 2025-04-12
 
 I want to think about adding an info page, but I might put that off for now. I don't think I have much more to add with an info page except that it's in the terminal, and it's more interactive then a man page. But my commands aren't so complex that they need a full info page, most of the information is good enough for a man page, or a simple `-h` flag. Having it online helps, because I can look up infomation on my phone if all I have is a terminal (no GUI, or web browser on the machine). But the info page I wanted to use as more of a comprehensive guid to all of it, including tutorials, like installing arch, setting up a website, etc. But if I'm stuck in a terminal, I use my phone because I wouldn't want to have to search the info page for step one, then close it, do the step, open it back up, search for step two, close it, do the step, open it back up, search for step three, etc. So really a PDF I can print out would be more handy, as opposed to more repetitive terminal information. But I do like me a good info page.
 
-==================================================================================================================================
+---
 
 ## Day 5: 2025-04-20
 
@@ -657,7 +655,7 @@ I really need to think about how to organize this. If it generates source docs f
 
 I can use my regular old `Documents` directory to organize the documents. Each project might have it's own code behind it, but we document it in one source file, and save it to multiple formats that can be used however from there. Company A might have a chart of accounts, and you might want to list it in a file that outlines all that. But the SQL for it goes with the code, not the docs. So when we need to access the information later on, we can use the man pages, the wiki, the printed form, and the blog just uses words to describe my thoughts about it. 
 
-==================================================================================================================================
+---
 
 ## Day 6: 2025-04-22
 
