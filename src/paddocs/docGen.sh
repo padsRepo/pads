@@ -10,7 +10,7 @@ genREADME(){
 $desc\n
  - $repo
  - $blog
- 
+ - $docs
 # $quickie
   " > "$save_dir/README.md"
   [[ $? -eq 0 ]] && printf " :: Generated: README.md\n"

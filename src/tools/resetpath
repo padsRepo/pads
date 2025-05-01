@@ -2,7 +2,7 @@
 
 # This resets $PATH to default
 logMsg "resetpath..${LINENO}: Resetting \$PATH..."
-echo $PATH
-export PATH=$(cat $HOME/Documents/default_path.txt)
-echo $PATH
-logMsg "resetpath.${LINENO}: Your \$PATH is reset!" "resetpath.${LINENO}: I couldn't reset your \$PATH"
+printf "${PATH}\n"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
+printf "${PATH}\n"
+

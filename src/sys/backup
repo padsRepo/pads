@@ -1,15 +1,8 @@
 #!/bin/bash
+# $BACKUP_DIR can be changed at: $HOME/.config/pads/profile.cfg
 
-# Wont backup home dir on server but also on own partition anyway.
-success="Successfully backed up PADS!"
-failure="Failed to back up PADS."
-backup_dir="${vault_dir}/archive/pads/pads_v$(pads -v).tar.gz"
-bin_dir="${HOME}/bin"
-build_dir="$HOME/tmp/pads"
-os_backup_dir="${backup_dir}/${HOSTNAME}_os-backup"
-cp -r ${bin_dir} ${build_dir}
-cp -r ${pads_dir}/* ${build_dir}
-sudo tar -cf ${backup_dir} ${build_dir}
-#sleep 3
-#sudo rsync --delete -aAXH --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/home/*","/media/*","/lost+found"} / ${os_backup_dir}
-#logMsg "backup.${LINENO}: Full System Backup to ${os_backup_dir}" "backup.${LINENO}: Failed to back up System."
+printf " :: Backing up system to ${BACKUP_DIR}...\n"
+sudo rsync --delete -aAXH "${HOME}/pads" "${BACKUP_DIR}/pads/pads_v$(pads -v)"
+sudo tar -cf "${BACKUP_DIR}/pads/pads_v$(pads -v).tar.gz" "${BACKUP_DIR}/pads/pads_v$(pads -v)"
+sudo rsync --delete -aAXH --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/home/*","/media/*","/lost+found"} / "${BACKUP_DIR}/arch"
+[[ $? -eq 0 ]] && printf "Done!\n"

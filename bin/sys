@@ -51,7 +51,7 @@
 ## end note
 
 ## env
-## None | N/A
+## BACKUP_DIR | ~/.config/pads/profile.cfg
 ## end env
 
 ## exit 

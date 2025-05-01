@@ -2,5 +2,4 @@
 
 cd "${HOME}/utils/mindmap" || exit
 ./__init__.py
-#. "${pads_dir}/utils/python_app/python_app/bin/activate"
-#python "${pads_dir}/utils/python_app"
+

@@ -34,6 +34,7 @@ quickstart=$(cat "$file" | sed -n "/## quickstart/,/## end quickstart/{//!p}" | 
 [[ -n $status ]] && stat="Exit Status\n|Code|Status|\n|-----|-----|\n$status\n"
 [[ -n $repoURL ]] && repo="Repository: $repoURL\n"
 [[ -n $blogURL ]] && blog="Blog: $blogURL\n"
+[[ -n $docsURL ]] && docs="Blog: $docsURL\n"
 [[ -n $author ]] && auth="Author\n$author\n"
 [[ -n $version ]] && ver="Version\n$version\n"
 [[ -n $copyright ]] && copy="Copyright\n$copyright\n"

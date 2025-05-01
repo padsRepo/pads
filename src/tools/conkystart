@@ -1,7 +1,5 @@
 #!/bin/bash
 
-success="Conky Panels Loaded"
-failure="Could not load Conky Panels..."
 SRC_DIR="${HOME}/utils/conky"
 conky -d -c ${SRC_DIR}/sys_panel &
 conky -d -c ${SRC_DIR}/log_panel &
