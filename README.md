@@ -1,9 +1,5 @@
 # PADS
-PADS is a general purpose programming language designed to automate tasks, 
-and run complex scripts in a format that only involves a few flags, and options. 
-The first flag in the syntax is made to access logic from modules which may have their own complex logic. 
-The second flag in the syntax is made to access options that may be available in those modules. 
-PADS also has robust error checking; so you can be sure not to enter the wrong flags. 
+pads is a shell-based automation framework designed to simplify system tasks and project scaffolding through concise command-line flags. pads serves as a wrapper around common system and development tasks, providing a more streamlined and user-friendly interface.
 Also see: info pads for the comprehensive guide.
 
  - Repository: https://github.com/padsRepo/pads
