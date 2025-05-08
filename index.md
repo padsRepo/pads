@@ -1,4 +1,4 @@
-[![Wormhole Logo](static/img/ai-wormhole4.png)](https://github.com/padsRepo/pads/blob/gh-pages/static/img/logos/ai-wormhole4.png)
+[![Wormhole Logo](static/img//logos/ai-wormhole4.png)](https://github.com/padsRepo/pads/blob/gh-pages/static/img/logos/ai-wormhole4.png)
 
 # Forward
 Welcome to a curated journey through the ideas, experiments, and breakthroughs that have shaped my research. This blog is more than a repository of findings—it's a living archive of exploration, built from curiosity, discipline, and a relentless pursuit of better answers. Whether you're here to study specific technical insights, trace the evolution of my projects, or discover frameworks for your own work, I’ve designed this space to be open, detailed, and grounded in transparency.
