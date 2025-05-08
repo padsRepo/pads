@@ -5,7 +5,7 @@
   }
 </style>
 
-![W](/mnt/pics/logos/ai-datasphere1.png "datasphere Logo")
+[![Datasphere Logo](https://github.com/padsRepo/datasphere/blob/main/src/img/logos/ai-dataspherelogo1.png)](https://github.com/padsRepo/datasphere/blob/main/src/img/logos/ai-dataspherelogo1.png)
 
 # Welcome to the Datasphere Blog
 
