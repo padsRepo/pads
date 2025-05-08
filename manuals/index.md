@@ -5,7 +5,7 @@
   }
 </style>
 
-[![PADS Logo](https://github.com/padsRepo/datasphere/blob/main/src/img/logos/ai-padslogo1.png)](https://github.com/padsRepo/datasphere/blob/main/src/img/logos/ai-padslogo1.png)
+[![PADS Logo](https://github.com/padsRepo/datasphere/blob/main/src/img/logos/ai-padslogo1.png)](static/img/logos/ai-padslogo1.png)
 
 # Forward
 Welcome to the documentation for PADS. This comprehensive guide has been designed to provide developers, engineers, and technical users with the necessary tools and insights to understand, implement, and extend the project effectively.
