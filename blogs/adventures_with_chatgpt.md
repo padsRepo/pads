@@ -1385,4 +1385,9 @@ With that said, I'll catch you on the flip side.
 > "Getcha Pull" 
 > - Dimebag Darrel
 
+---
+© 2025 Joe Corso All rights reserved. 
+
+Version 0.0.1
+
 [2]: https://en.wikipedia.org/wiki/Regulation_of_artificial_intelligence
