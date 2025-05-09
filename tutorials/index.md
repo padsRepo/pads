@@ -5,7 +5,7 @@
   }
 </style>
 
-[![Joe Corso Logo](static/img/logos/ai-joecorso3.png)](https://github.com/padsRepo/datasphere/blob/main/src/img/logos/ai-joecorso3.png)
+[![Joe Corso Logo](../static/img/logos/ai-joecorso3.png)](https://github.com/padsRepo/datasphere/blob/main/src/img/logos/ai-joecorso3.png)
 
 # Welcome to "I’m Just Gonna Write This Down"
 
