@@ -5,7 +5,7 @@
   }
 </style>
 
-[![Datasphere Logo](static/img/logos/ai-datasphere1.png)](https://github.com/padsRepo/datasphere/blob/main/src/img/logos/ai-datasphere1.png)
+[![Datasphere Logo](../static/img/logos/ai-datasphere1.png)](https://github.com/padsRepo/datasphere/blob/main/src/img/logos/ai-datasphere1.png)
 
 # Welcome to the Datasphere Blog
 
