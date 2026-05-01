@@ -1,0 +1,7 @@
+#!/bin/bash
+
+SRC_DIR="${base_dir}/lib/conky"
+conky -d -c ${SRC_DIR}/sys_panel &
+conky -d -c ${SRC_DIR}/log_panel &
+conky -d -c ${SRC_DIR}/info_panel &
+#conky -d -c ${SRC_DIR}/vault_panel &

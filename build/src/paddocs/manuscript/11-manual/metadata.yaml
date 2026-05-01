@@ -1,0 +1,55 @@
+---
+title: "Operation Wormhole"
+subtitle: "The Diary of a Madman"
+author: "Joe Corso"
+date: "May, 24, 2024"
+version: "v0.0.0.1"
+titlepage: true
+titlepage-color: "#FFFFFF"
+titlepage-text-color: "FEFEFE"
+titlepage-rule-color: "CCCCCC"
+titlepage-rule-height: 4
+titlepage-background: "cover.pdf"
+titlegraphic: "../img/ai-wormhole4.png"
+logo: "../img/ai-wormhole4.png"
+logo-width: 100 
+page-background:
+page-background-opacity:
+links-as-notes: true
+lot: true
+lof: true
+ 
+toc: true
+toc-depth: 6
+number-sections: true
+top-level-division: chapter
+
+fontsize: 10pt
+documentclass: report
+classoption: oneside
+geometry: margin=1in
+mainfont: "Fira Code"
+monofont: "Fira Code"
+linestretch: 1.2
+colorlinks: true
+linkcolor: blue
+
+header-includes:
+  - \usepackage{graphicx}
+  - \usepackage{fancyhdr}
+  - \usepackage{ragged2e}
+  - \pagestyle{fancy}
+  - \fancyhf{}
+  - \fancyhead[L]{Operation Wormhole}
+  - \fancyhead[R]{Comprehensive Guide}
+  - \fancyfoot[L]{Joe Corso}
+  - \fancyfoot[C]{pads.email.address@gmail.com}
+  - \fancyfoot[R]{2021-05-23}
+
+lang: en-US
+keywords: [automation, pads, documentation]
+abstract: |
+  This is all the documentation made by Joe Corso in one big guide.
+  It is one size fits all, as long as that size fits me.
+  You may feel free to jump around, but do not expect to understand where you land.
+---

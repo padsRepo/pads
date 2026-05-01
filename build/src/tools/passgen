@@ -1,0 +1,12 @@
+#!/bin/bash
+
+randpass=$(sudo < /dev/urandom tr -dc A-Za-z0-9{\!@#$%^\&*\(\){}[]?} | head -c14; echo)
+saveDir="$HOME/pads/data/profile/pass.txt"
+echo " * Password: ${randpass}"
+read -p " * How's this? (y/N) " enter
+if [[ $enter == "y" || $enter == "Y" || $enter == "yes" || $enter == "Yes" ]]; then 
+  echo $randpass > "${saveDir}"
+  echo " * Saved to ${saveDir}"
+elif [[ $enter == "n" || $enter == "N" || $enter == "no" || $enter == "No" || $enter == "" ]]; then
+  echo " * Password not saved..."
+fi

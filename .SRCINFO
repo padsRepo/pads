@@ -1,0 +1,11 @@
+pkgbase = pads
+	pkgdesc = test
+	pkgver = 0.0.6
+	pkgrel = 1
+	url = here.md
+	arch = any
+	license = GPL
+	source = pads-0.0.6.tar.gz
+	sha256sums = SKIP
+
+pkgname = pads

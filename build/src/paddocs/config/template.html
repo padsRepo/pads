@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$"$if(dir)$ dir="$dir$"$endif$>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="paddocs" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+$for(author-meta)$
+  <meta name="author" content="$author-meta$" />
+$endfor$
+$if(date-meta)$
+  <meta name="dcterms.date" content="$date-meta$" />
+$endif$
+$if(keywords)$
+  <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
+$endif$
+$if(description-meta)$
+  <meta name="description" content="$description-meta$" />
+$endif$
+  <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true }); // This tells Mermaid to automatically render diagrams on page load
+  </script>
+  $for(css)$
+    <link rel="stylesheet" href="$css$" />
+  $endfor$
+  <style>
+    $styles.html()$
+    body{max-width: 90em;}
+    .dedication{font-size: 85%; display: block; margin: 2em 2em 2em 2em; text-align: center;}
+    .dedication-title{text-align: center;}
+    .dedication-title:before{content: "Dedication"; font-weight: bold}
+    .preface-title:before{content: "Preface"; font-weight: bold;}
+    footer, footer small{clear: both; float: left;}
+    #TOC {
+    position: fixed;
+    width: 20em;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-color: lightblue;
+    overflow-y: scroll;
+    padding: 1em;
+    }
+    @media only screen and (max-width: 600px) {
+    body {
+        font-size: 0.9em;
+        padding: 12px;
+    }
+    h1 {
+        font-size: 1.8em;
+    }
+    #TOC {
+        display: block;
+        position: static;
+        background-color: white;
+    }
+    }
+  </style>
+$for(header-includes)$
+  $header-includes$
+$endfor$
+$if(math)$
+$if(mathjax)$
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+$endif$
+  $math$
+$endif$
+</head>
+<body>
+$for(include-before)$
+$include-before$
+$endfor$
+$if(title)$
+<header id="title-block-header">
+<h1 class="title">$title$</h1>
+$if(subtitle)$
+<p class="subtitle">$subtitle$</p>
+$endif$
+$for(author)$
+<p class="author">$author$</p>
+$endfor$
+$if(date)$
+<p class="date">$date$</p>
+$endif$
+$if(abstract)$
+<div class="abstract">
+<div class="abstract-title">$abstract-title$</div>
+$abstract$
+</div>
+$endif$
+$if(dedication)$
+<div class="dedication">
+<div class="dedication-title">$dedication-title$</div>
+$dedication$
+</div>
+$endif$
+$if(preface)$
+<div class="preface">
+<div class="preface-title">$preface-title$</div>
+$preface$
+</div>
+$endif$
+</header>
+$endif$
+$if(toc)$
+<nav id="$idprefix$TOC" role="doc-toc">
+$if(toc-title)$
+<h2 id="$idprefix$toc-title">$toc-title$</h2>
+$endif$
+$table-of-contents$
+</nav>
+$endif$
+$body$
+$for(include-after)$
+$include-after$
+$endfor$
+
+<footer>
+  <small>All Rights Reserved (c) $author$ 2025</small>
+  <small>This documentation was generated using <a href="https://padsrepo.github.io/pads/#paddocs">PADDOCS</a></small>
+</footer>
+</body>
+</html>

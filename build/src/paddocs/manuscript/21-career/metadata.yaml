@@ -1,0 +1,46 @@
+---
+title: "Resume"
+subtitle: "Whatever the cover is."
+author: "Joe Corso"
+date: "November 08, 2025"
+version: "v1.0.0"
+titlepage: false
+titlepage-color: "#FFFFFF"
+titlepage-text-color: "FEFEFE"
+titlepage-rule-color: "CCCCCC"
+titlepage-rule-height: 4
+titlepage-background: "cover.pdf"
+titlegraphic: "../img/ai-wormhole4.png"
+logo: "../img/ai-wormhole4.png"
+logo-width: 100 
+page-background:
+page-background-opacity:
+links-as-notes: true
+lot: false
+lof: false
+ 
+toc: false
+toc-depth: 6
+number-sections: true
+top-level-division: chapter
+
+fontsize: 10pt
+documentclass: report
+classoption: oneside
+geometry: margin=0.75in
+mainfont: "SpaceMono Nerd Font"
+monofont: "SpaceMono Nerd Font"
+linestretch: 1.0
+colorlinks: true
+linkcolor: blue
+
+header-includes:
+  - \usepackage{graphicx}
+  - \usepackage{fancyhdr}
+  - \usepackage{ragged2e}
+  - \pagestyle{fancy}
+  - \fancyhf{}
+
+lang: en-US
+keywords: [automation, pads, documentation, resume, llm, self-documentation, bash]
+---

@@ -1,0 +1,54 @@
+---
+title: "Business Documentation"
+subtitle: "Operations, Reports, Chart of Accounts"
+author: "Joe Corso"
+date: "May, 24, 2024"
+version: "v0.0.1"
+titlepage: false
+titlepage-color: "#FFFFFF"
+titlepage-text-color: "FEFEFE"
+titlepage-rule-color: "CCCCCC"
+titlepage-rule-height: 4
+titlepage-background: "assets/images/ai-wormhole4.pngf"
+titlegraphic: "assets/images/ai-wormhole4.png"
+logo: "assets/images/ai-wormhole4.png"
+logo-width: 100
+page-background:
+page-background-opacity:
+links-as-notes: true
+link-citations: true
+
+toc: true
+toc-depth: 6
+number-sections: true
+top-level-division: chapter
+bibliography: "includes/reference.bib"
+csl: "config/ieee.csl"
+
+fontsize: 10pt
+documentclass: report
+classoption: oneside
+geometry: margin=0.75in
+mainfont: "Fira Code"
+monofont: "Fira Code"
+linestretch: 1.2
+colorlinks: true
+linkcolor: blue
+
+header-includes:
+  - \usepackage{graphicx}
+  - \usepackage{fancyhdr}
+  - \usepackage{ragged2e}
+  - \pagestyle{fancy}
+  - \fancyhf{}
+  - \fancyhead[L]{Operation Wormhole}
+  - \fancyhead[R]{Comprehensive Guide}
+  - \fancyfoot[L]{Joe Corso}
+  - \fancyfoot[C]{pads.email.address@gmail.com}
+  - \fancyfoot[R]{2021-05-23}
+
+lang: en-US
+keywords: [automation, pads, documentation]
+abstract: |
+  This is a collection of all the business plans I've put together.
+---

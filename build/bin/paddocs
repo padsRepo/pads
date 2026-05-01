@@ -1,0 +1,350 @@
+#!/bin/bash
+
+# This is going to be the official paddocs. Do not dev any other paddocs directory. Keep it all here...for the love of God....
+
+## title Paddocs
+## author Joe Corso
+## email pads.email.address@gmail.com
+## created 2025-04-08
+## repoURL [https://github.com/padsRepo/pads](https://github.com/padsRepo/pads)
+## docsURL [https://github.com/padsRepo/pads/wiki](https://github.com/padsRepo/pads)
+## blogURL [https://padsrepo.github.io/pads/](https://github.com/padsRepo/pads)
+## brief This manual is for PADDOCS (1.1.0, 2025-10-25) A module which self-generates documentation
+
+## desc 
+## Paddocs is a module for PADS which self generates documentation from code into a technical manual, blog, info, and man pages.
+## This documentation was generated using the same library. You can generate the book layout into the `~/dev/pads/paddocs/` directory.
+## Write the documentation within the programs files using the headers outlined in [Notes](#notes-1). Build the documentation with `-b`, then generate the docs with `-g`.
+## You can also use `paddocs` to generate report templates, metadata for the book, covers, bibliography info. etc.
+## end desc
+
+## license MIT License
+## copyright
+## Copyright (c) 2022 Joe Corso
+## 
+## Permission is hereby granted, free of charge, to any person obtaining a
+## copy of this software and associated documentation files (the
+## "Software"), to deal in the Software without restriction, including
+## without limitation the rights to use, copy, modify, merge, publish,
+## distribute, sublicense, and/or sell copies of the Software, and to
+## permit persons to whom the Software is furnished to do so, subject to
+## the following conditions:
+## 
+## The above copyright notice and this permission notice shall be included
+## in all copies or substantial portions of the Software.
+## 
+## THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+## OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+## MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+## IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+## CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+## TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+## SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+## end copyright
+
+## readme
+## #### Before you start
+## 
+## Before you begin, make sure you meet these prerequisites:
+## 
+## * Bash >= 5.2
+## * Pandoc >= 3.4
+## * Texlive >= 2025.2-2
+## * Texlive-bibtexextra >= 2025.2-2
+## * Texlive-context >= 2025.2-2
+## * Texlive-fontsextra >= 2025.2-2
+## * Texlive-fontsrecommended >= 2025.2-2
+## * Texlive-fontutils >= 2025.2-2
+## * Texlive-formatsextra >= 2025.2-2
+## * Texlive-latex >= 2025.2-2
+## * Texlive-latexextra >= 2025.2-2
+## * Texlive-latexrecommended >= 2025.2-2
+## * Texlive-luatex >= 2025.2-2
+## * TTF-Hack
+## * TTF-Nerd-Fonts-Symbols
+## 
+## #### Get started
+## 
+## 1) Download: 
+## ```bash
+##     $ git clone https://github.com/padsRepo/paddocs
+## ```
+## 
+## 2) Install: 
+## ```bash
+##     $ makepkg -si
+## ```
+## 
+## #### What's next
+## 
+## 1) Build the book:
+## ```bash
+##    $ paddocs -b book && paddocs -b metadata
+## ```
+## 
+## 2) Write your inline-documentation using the headers outlined in [Notes](#notes-1)
+##    - You don't have to use all of them
+## 
+## 3) Make a directory same as your command name under `manuscript/<sectionName>/<cmd>`
+## 4) Copy the report schema you need from `/assets/schemas` to `/manuscript/<sectionName>/`
+## 5) Generate your documentation:
+## ```bash
+##    $ paddocs -c <cmd> -l <lang> -b doc && paddocs -g book html
+## ```
+## 
+## 6) View it in the browser:
+## ```bash
+##    $ paddocs -s
+##    $ http://127.0.0.1:8000
+## ```
+## end readme
+
+## exit 
+## 0 | Success
+## 1 | Failure
+## 127 | K18
+## 130 | Ctl+C
+## end exit
+
+## env 
+## None | N/A
+## end env
+
+## file 
+## |               | \${base_dir}/src/paddocs       | Source Code Directory, Book manuscript, metadata, and output
+## |               | \${base_dir}/etc               | Directory for trap signals/config files
+## | paddocs       | \${base_dir}/bin/paddocs       | Executable Directory
+## | paulBunyan.sh | \${base_dir}/etc/paulBunyan.sh | Library for logs using trap signals
+## end file
+
+## module
+## parse.sh    | Configure the necessary vars for the template
+## build.sh    | Make and save the template with the parsed vars
+## generate.sh | Create the full book, sections, or chapters
+## end module
+
+## api
+## | parseBash   | parse.sh    |     [shell_tags](#notes-1)            | 0 success 1 error | If -l \${lang} is bash configure vars from given -c \${cmd} |
+## | parsePython | parse.sh    |     [python_tags](#notes-1)           | 0 success 1 error | If -l \${lang} is python configure vars from given -c \${cmd} |
+## | book        | build.sh    | -b book                               | 0 success 1 error | Build the skeleton directory for a new project |
+## | metadata    | build.sh    | -b metadata                           | 0 success 1 error | Generate `metadata.yaml` file for the book |
+## | readme      | build.sh    | -b readme                             | 0 success 1 error | Generate `README.md` file from given -c \${cmd} |
+## | license     | build.sh    | -b license                            | 0 success 1 error | Generate `LICENSE` file from give -c \${cmd} |
+## | man         | build.sh    | -b man                                | 0 success 1 error | Generate GROFF man page from given -c \${cmd} to `manuscript/11-manual/\${cmd}` |
+## | doc         | build.sh    | -b doc                                | 0 success 1 error | Generate Technical Documentation from given -c \${cmd} to `manuscript/10-docs/\${cmd}` |
+## | genBook     | generate.sh | -g book [<html,pdf,md>]               | 0 success 1 error | Generate entire manuscript to output/book directory in given format |
+## | genSection  | generate.sh | -g book [<html,pdf,md>] <sectionName> | 0 success 1 error | Generate <sectionName> to `output/section` in given format |
+## | genChapter  | generate.sh | -g book [<html,pdf,md>] <chapterName> | 0 success 1 error | Generate <chapterName> to `output/chapter` in given format |
+## | genMan      | generate.sh | -g man -c \${cmd}                     | 0 success 1 error | Generate man to `output/man` and update `/usr/share/man/man1` |
+## end api
+
+## example
+## `paddocs -h`  
+## : Show the help menu and exit  
+
+## `paddocs -v`  
+## : Show the version and exit  
+
+## `paddocs -b book`  
+## : Build the skeleton project for `paddocs` to `\${base_dir}/paddocs/`  
+
+## `paddocs -c paddocs -l bash -b docs`  
+## : Build the technical manual for `paddocs` into the `paddocs/manuscript/10-docs/\<projDir\>` directory. This is if you need more of a report. If you want the manpage use `man` instead.  
+
+## `paddocs -c paddocs -l bash -b man`  
+## : Build the man page for `paddocs` into the `paddocs/manuscript/11-manual/\<cmd\>.md` directory.  
+
+## `paddocs -g book pdf`  
+## : Generate a PDF compendium of the entire `manuscript/` directory to `output/compendium.pdf`  
+
+## `paddocs -g book html`  
+## : Generate a PDF compendium of the entire `manuscript/` directory to `output/compendium.html`  
+## end example
+
+## advanced
+## `paddocs -s`  
+## : Run a http.server to view the files in a web browser. Search the url in your browser: `http://127.0.0.1:8000`  
+
+## `paddocs -c paddocs -l bash -b man && paddocs -g man -c paddocs`  
+## : Build the man page for `paddocs` into the `paddocs/manuscript/11-manual/\<cmd\>.md` directory. Then generate a `man` page for `paddocs`. This will automatically mv the tar.gz file to `/usr/share/man/man1`. After it's complete you will be able to type `man <name>` for the man page.  
+
+## `paddocs -c interlink -l python -b doc && paddocs -g section html interlink`  
+## : Build the technical manual for a python library. Then generate the section for it to `/output/section/<cmd>`.  
+## end advanced
+
+## troubleshoot
+## 1) turn it off and on again
+## 2) blow on it
+## 3) say 3 hail mary's
+## end troubleshoot
+
+## contributing
+## 1. Fork the repo
+## 2. Create a feature branch (`git checkout -b feature-name`)
+## 3. Commit changes (`git commit -m "Add feature"`)
+## 4. Push branch (`git push origin feature-name`)
+## 5. Open a Pull Request
+## end contributing
+
+## history 
+## - 2025-04-08 Project Paddocs was created
+## - 2025-04-25 Added Source Code block to templates.
+## - 2025-05-28
+##    - Added `buildbook`, `genreadme`, `genlicense`, `gendocs`, `genman`, `genhtml`, `genpdf`, `genall` functions
+##    - Divided logic into `build.sh` and `generate.sh`
+##    - Created `section`, `chapter`, `man`
+## - 2025-06-19
+##    - Created python module to parse python code
+## - 2025-07-13
+##    - Refractored `generate.sh`
+##    - Refractored `build.sh`
+##    - Changed `$quickie` to `$readme`
+## - 2025-07-15
+##    - Refractored `vars.sh` to `parse.sh`
+##    - Combined `python` and `bash` module into `parse.sh/{parseBash,parsePython}`
+##    - Added `-s` flag for built in web server `python -m http.server 8088`
+## - 2025-08-08
+##    - Added responsive.css
+##    - Refractored `generate.sh`
+## - 2025-08-12
+##    - Reworked the book structure
+## - 2025-08-14
+##    - Added `module`, `api`, `advanced`, `troubleshoot`, `contributing` headers
+##    - Integrated `programming-manual.md` template into `doc()` function
+## - 2025-11-08
+##    - Added a resume category.
+## end history
+
+## note
+## - The readme headers must all have spaces after the `##` to render the markdown properly. Ex: `##_` NOT `##`. Or they can use new lines for proper formatting.
+## - Headers:
+##  - Shell:
+##      - title
+##      - subtitle
+##      - brief
+##      - desc
+##      - author
+##      - email
+##      - created
+##      - repoURL
+##      - docsURL
+##      - blogURL
+##      - version
+##      - copyright
+##      - end copyright
+##      - lic
+##      - synopsis
+##      - syntax
+##      - usageOpts (This is generated from the `usage()` function)
+##      - exit
+##      - end exit
+##      - env
+##      - end env
+##      - file
+##      - end file
+##      - history
+##      - end history
+##      - note
+##      - end note
+##      - example
+##      - end example
+##      - seealso
+##      - sourcecode
+##      - readme
+##      - end readme
+##      - modules
+##      - end modules
+##      - api
+##      - end api
+##      - advanced
+##      - end advanced
+##      - troubleshoot
+##      - end troubleshoot
+##      - contributing
+##      - end contributing
+##  - Python:
+##      - \__doc__
+##      - \__version__
+##      - \__author__
+##      - \__date__
+##      - \__updated__
+##      - \__copyright__
+##      - \__license__
+##      - \__email__
+##      - \__status__
+##      - \__description__
+##      - Google Style Docstrings
+## end note
+
+## seealso man paddocs, info pads
+
+title="Paddocs"
+subtitle="Self-Generating Documentation Module"
+version="1.1.0"
+OPTSTRING="b:,c:,g:,l:,s,v,h"
+synopsis="<cmd> -[<argument>] [<name>]"
+syntax="${0##*/} -[${OPTSTRING}] [<name>]"
+base_dir="$(dirname "$(readlink -f "${0%/*}")")"
+ 
+description(){
+  cat << EOF
+ * ${title}
+ * ${subtitle}
+ 
+EOF
+}
+ 
+usage(){
+  cat << EOF
+  Synopsis: $synopsis
+  Syntax: $syntax
+  Usage:
+    -b <name>                        Build <name> to manuscript/
+                                     <type> is one of: book, metadata, readme, license, doc, man
+    -c <name>                        Command to generate docs for
+    -g <type> <prefix> <sectionName> Generate <name> to output/
+                                     <type> is one of: markdown, html, pdf, section, chapter, man
+    -l <name>                        Coding language to use for the code block.
+    -s                               Run python -m http.server and exit
+    -v                               Show Version
+    -h                               Show Usage
+  Ex: paddocs -c pads -l bash -b doc | paddocs -c paddocs -l bash -b man | paddocs -c interlink -l python -b doc && paddocs -g section html interlink
+  See also: man paddocs, info pads
+EOF
+}
+ 
+manual(){
+  description
+  usage
+}
+ 
+while getopts ${OPTSTRING} mod; do
+  case ${mod} in
+    b) build=${OPTARG};;
+    c) cmd=${OPTARG};;
+    g) type=${OPTARG}; prefix=${3}; sectionName=${4};;
+    l) lang=${OPTARG};;
+    s) server=True;;
+    v) echo "${version}"; exit;;
+    h) usage; exit;;
+    ?) echo " * ${0##*/} -h for help"; exit 2;;
+    *) echo "K18 Error"; exit 2;;
+  esac
+done
+[[ $# -eq 0 ]] && manual && exit
+
+. "${base_dir}/etc/paulBunyan.sh"
+. "${base_dir}/src/paddocs/src/parse.sh"
+ 
+cd $base_dir/src/paddocs
+  
+if [[ ${lang} == "bash" ]]; then
+    parseBash
+elif [[ ${lang} == "python" ]]; then
+    parsePython && [[ $? -eq 0 ]] && INFO "\nBuild: ${build} \nCMD: ${cmd} \nFile: file:/\${saveDir}/10-${cmd}.md \n" && exit
+elif [[ -n $server ]]; then
+    python -m http.server 8000 &
+fi  
+  
+[[ -n ${build} ]] && . "$base_dir/src/paddocs/src/build.sh" && $build && [[ $? -eq 0 ]] && INFO "\nBuild: ${build} \nCMD: ${cmd} \nFile: file://${savePath} \n" && exit
+[[ -n ${type} ]] && . "${base_dir}/src/paddocs/src/generate.sh" && [[ $? -eq 0 ]] && INFO "\nGenerate: file://${save_dir}\n" && exit 0

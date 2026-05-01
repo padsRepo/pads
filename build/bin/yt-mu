@@ -1,0 +1,36 @@
+#!/bin/bash
+
+[[ $# -eq 0 ]] && printf "$0 <stripartist> <stripfront> <stripend> <URL> \n :: Downloads to: music/<stripartist> \n" && exit
+
+stripartist="${1}"
+stripfront="${2}"
+stripend="${3}"
+URL="${4}"
+LIMIT_RATE="5M"
+SLEEP_MIN=5
+SLEEP_MAX=15
+
+meta=$(yt-dlp --print playlist_title $URL -I 1:1)
+#albumname="August Burns Red Rescue and Restore Full Album"
+artistname=${meta%${stripartist}*}
+albumname=${meta%${stripend}*}
+albumname=${albumname##*${stripfront}}
+
+[[ $meta == "NA" ]] && artistname="${5}"
+
+printf "$meta: \n${artistname} - ${albumname}\n"
+read -p "Continue? y/N $ " dl
+if [[ ${dl} =~ ["*n","*N"] || ${dl} == "" ]]; then
+  echo " :: Exiting..."
+  exit 0
+elif [[ ${dl} =~ ["Y","y"] ]]; then
+  echo "Downloading..."
+  yt-dlp --cookies cookies.txt --limit-rate "$LIMIT_RATE" --sleep-interval $SLEEP_MIN --max-sleep-interval $SLEEP_MAX -P "${HOME}/dl/${artistname}/${albumname}" "$URL"
+  printf ":: DONE!\n"
+  exit 0
+else
+  echo "IDK"
+  exit 1
+fi
+
+

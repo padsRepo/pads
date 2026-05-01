@@ -1,0 +1,15 @@
+#!/bin/bash
+
+logMsg "buildpkg.${LINENO}: Building install package..."
+[[ ! -d "${HOME}/Documents/pads" ]] && mkdir "${HOME}/Documents/pads" || continue
+cd "/usr/local"
+echo " * Setting up package..."
+sudo cp -vr "bin/pads" "etc/msg.sh" "man/man1/pads.1.gz" "src/" "$HOME/Documents/pads"
+sudo cp -v "/usr/share/info/pads.info.gz" "${HOME}/Documents/pads"
+cd "${HOME}/Documents/pads"
+echo " * Building package..."
+tar -cf "${HOME}/Documents/pads_v$(pads -v).tar.gz" .
+echo " * Copying to /repo and /archive..."
+sudo cp -vr "$HOME/Documents/pads_v$(pads -v).tar.gz" "/mnt/storage/archive/pads_backup"
+sudo cp -vr "$HOME/Documents/pads_v$(pads -v).tar.gz" "/mnt/storage/repo"
+logMsg "buildpkg.${LINENO}: Build Successful" "buildpkg.${LINENO}: Build Failure"

@@ -1,0 +1,42 @@
+# Compiled binaries or scripts output
+*.o
+*.out
+*.bin
+
+# Backup files
+*~
+*.bak
+*.swp
+
+# Temporary files
+*.tmp
+*.temp
+
+# Logs
+*.log
+
+# Cache or temporary directories
+.cache/
+tmp/
+temp/
+
+# Environment files (if you have scripts that generate them)
+.env
+.env.*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.kate-swp
+*.sw?
+
+# Other
+*.pid
+pool/*
+build/log/*

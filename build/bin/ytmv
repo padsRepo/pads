@@ -1,0 +1,116 @@
+#!/bin/bash
+
+## title ytmv
+## subtitle Movie specific configs to download movies with yt-dlp
+## brief
+## desc
+## author
+## email
+## created
+## repoURL
+## docsURL
+## blogURL
+## version
+## copyright
+## end copyright
+## lic
+## synopsis
+## syntax
+## exit
+## end exit
+## env
+## end env
+## file
+## end file
+## history
+## end history
+## note
+## end note
+## example
+## end example
+## seealso
+## sourcecode
+## readme
+## end readme
+
+title="ytmv"
+subtitle="Movie specific configs to download movies with yt-dlp"
+version="0.1.0"
+OPTSTRING="e:,u:,l:,h,v"
+synopsis="<cmd> [stripend] <URL>"
+syntax="${0##*/} -[${OPTSTRING}] -[arg]"
+base_dir="$(dirname "$(readlink -f "${0%/*}")")"
+path=$(cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
+
+. "${base_dir}/etc/paulBunyan.sh"
+
+description(){
+  cat << EOF
+ * ${title}
+ * ${subtitle}
+
+EOF
+}
+
+usage(){
+  cat << EOF
+  Synopsis: $synopsis
+  Syntax: $syntax
+  Usage:
+    -e [chars] Strip End Delimiter
+    -u [URL]   Download URL
+    -l [int]   Limit rate in mB
+    -v         Show Version
+    -h         Show Usage
+  Ex:
+  See also:
+  Downloads to: $HOME/dl/movies/<movieName>
+  Save to: ${path%/*}/src/yt/movieList.sh
+EOF
+}
+
+manual(){
+  description
+  usage
+}
+
+while getopts ${OPTSTRING} name; do
+  case ${name} in
+    e) stripend="${OPTARG}";;
+    u) URL="${OPTARG}";;
+    l) LIMIT_RATE="${OPTARG:-5M}";;
+    v) echo "${version}"; exit;;
+    h) usage; exit;;
+    ?) echo " * ${0##*/} -h for help"; exit 2;;
+    *) echo "K18 Error"; exit 2;;
+  esac
+done
+[[ $# -eq 0 ]] && manual && exit
+
+SLEEP_MIN=5
+SLEEP_MAX=15
+
+meta=$(yt-dlp --print title $URL -I 1:1)
+title=${meta%${stripend}*}
+movie_path="$HOME/dl/movies/$title"
+
+INFO "${meta}" "$movie_path"
+read -p " :: Continue? y/N $ " dl
+
+if [[ ${dl} =~ ["*n","*N"] || ${dl} == "" ]]; then
+  echo " :: Exiting..."
+  exit 0
+elif [[ ${dl} =~ ["Y","y"] ]]; then
+  cat << EOF >> ${path%/*}/src/yt/movieList.sh
+$0 "${stripend}" "$URL"
+EOF
+  echo "Downloading..."
+  yt-dlp --cookies "$HOME/dl/cookies.txt" --limit-rate "$LIMIT_RATE" --sleep-interval $SLEEP_MIN --max-sleep-interval $SLEEP_MAX -P "./dl/${artistname}/${albumname}" "$URL"
+  printf ":: DONE!\n"
+  exit 0
+else
+  echo "IDK"
+  exit 1
+fi
+
+
