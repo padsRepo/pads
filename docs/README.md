@@ -6,7 +6,7 @@ providing a more streamlined and user-friendly interface.
 PADS is designed to support the VCS, Workflow, and CI/CD of
 [Operation Mindmap].
 
- - Repo:  https://github.com/padsRepo/pads/docs/page/pads.html
+ - Repo:  https://github.com/padsRepo/pads/tree/main/docs/page/pads.html
  - Blog:  https://padsrepo.github.io/pads/
  - Docs:  https://github.com/padsRepo/pads/wiki
  
