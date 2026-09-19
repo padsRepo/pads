@@ -1,3 +1,0 @@
-# Technical Documentation
-
-## TOC

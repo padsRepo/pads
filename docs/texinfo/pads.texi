@@ -1,0 +1,1322 @@
+@node Top
+@top Appendix
+
+This manual is for PADS (@uref{0.0.5,version}, @uref{2025-02-26,date}) a
+general purpose automated assistant
+
+Copyright (c) 2022 Joe Corso
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+``Software''), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED ``AS IS'', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Documentation at @uref{https://www.joecorso.com/guide,,PADS Manual
+(https://www.joecorso.com/guide)}
+
+@menu
+* Forward::
+* Updates::
+* Command Line::
+* Interlink::
+* Tutorials::
+* Reference::
+@end menu
+
+@node Forward
+@chapter Forward
+@anchor{#forward}
+I started programming with HTML, and CSS. My goal was to make an
+e-commerce website to sell the products I made blowing glass. I realized
+this might be something for me when I was awake at 5am feverishly typing
+in more lines of code. I then noticed how important it was to organize
+the code. Every week I was changing the directory structure. Slowly I
+learned python, the Django, then Flask, then Bash. When I learned Bash I
+felt like my power lever exceeded 9K. But I still had the same problem:
+a lot of code with no where to go. So I started to write wrappers in
+Bash, to call the function name rather then source a random file.
+Eventually it turned into a full command with options and arguments.
+Eventually, an new problem arose. How to remember all this stuff? So I
+decided to document everything. I fould texinfo because I wanted
+something to run in a terminal, online, and printout. So here we are, my
+comprehensive guide on all things I've researched, and documented so far
+to this point. The man page my be outdated.
+
+@node Updates
+@chapter Updates
+@anchor{#updates}
+@itemize
+@item
+Started 12-29-23 12:00pm
+@item
+Worked on throughout 12-30-2023
+@item
+Updated 1-1-2024
+@item
+Updated 2-9-2024
+@item
+Changed PADS Syntax 9-2-2024
+@end itemize
+
+@node Command Line
+@chapter Command Line
+@anchor{#command-line}
+PADS is a general purpose programming language designed to automate
+tasks, and run complex scripts in a format that only involves a few
+flags, and options. The first flag in the syntax is made to access logic
+from modules which may have their own complex logic. The second flag in
+the syntax is made to access options that may be available in those
+modules. PADS also has robust error checking; so you can be sure not to
+enter the wrong flags. Also see: info pads for the comprehensive guide.
+The man page may be out of date.
+
+Synopsis:
+
+@verbatim
+        `<cmd> -[<module>] -[<argument>] -[<option>] [name...]`  
+
+        `pads -S -[b,u,i,l,d,r:,m,s,h,v] [name...]`  
+
+        `pads -P -[p:,f:,g:,h,v] -[m:,s:,d-h] <name>`  
+
+        `pads -R -[s:,v,h] <name...>`  
+
+        `pads -T [-h|-v]`  
+
+        `pads -x`  
+
+        `pads -h`  
+
+        `pads -v`  
+@end verbatim
+
+@menu
+* Options::
+* Exit Status::
+* Environment::
+* Directories::
+* History::
+* Notes::
+* Examples::
+@end menu
+
+@node Options
+@section Options
+@anchor{#options}
+
+@menu
+* System Module::
+* Project Module::
+* Run Module::
+* Test Module::
+@end menu
+
+@node System Module
+@subsection System Module
+@anchor{#system-module}
+@code{-S -[b,u,i,l,d,r:,m,s,h,v] [name...]}@*
+Run automated system scripts and exit. The logic for this module is
+intended to interact with the OS itself. The options are as follows:
+
+@verbatim
+    `-b`  
+    : Backup your system to {set a location}
+
+    `-u` [name...]  
+    : Update your machine. If given a name it will attempt to install packages.
+
+    `-i`  
+    : Update pads info page. Docs are at: pads/docs/pads.texi
+
+    `-l`  
+    : List packages installed on this machine.
+
+    `-d`  
+    : Update pads' man page. Docs are at: pads/docs/pads.1.
+
+    `-r` <name...>  
+    : Remove supplied packages
+
+    `-m`  
+    : Set up Mariadb
+
+    `-v`  
+    : Show version
+
+    `-h`  
+    : Show help
+@end verbatim
+
+@node Project Module
+@subsection Project Module
+@anchor{#project-module}
+@code{-P -[p:|f:|g:|h|v] -[<m|s|d>] <name>}@*
+Run modules parsed in another language and exit. This module is intended
+to run full programs. Usually something other than Bash. The m flag is
+make, the s flag is start, the d flag is delete the project.
+
+@verbatim
+    `-p -[<m|s|d>] <name>`  
+    : For managing a Python Project or Module.
+
+    `-f -[<m|s|d>] <name>`  
+    : For managing a Flask Project or Module.
+
+    `-g -[<m|s|d>] <name>`  
+    : For managing a Pygames Project or Module.
+
+    `-h`  
+    : Show help for the P module and exit
+
+    `-v`  
+    : Show version for the -p module and exit
+@end verbatim
+
+@node Run Module
+@subsection Run Module
+@anchor{#run-module}
+@code{-R [-s|-h|-v]}@*
+Used to run any random script within the r_opts.sh file. This flag is
+good for testing.
+
+@verbatim
+    `-s [<name>]`  
+    : Run the given script. Good for scripts that dont fit into a module.
+
+    `-h`  
+    : Show help for the R module.
+
+    `-v`  
+    : Show version for the R module.
+@end verbatim
+
+@node Test Module
+@subsection Test Module
+@anchor{#test-module}
+@code{-T -[arg]} [name] For tests scripts
+
+@verbatim
+    `-s`  
+    : Run script with specified `name`
+
+    `-h`  
+    : Show help for PADS and exit.
+
+    **-v`  
+    : Show version for PADS and exit
+@end verbatim
+
+@node Exit Status
+@section Exit Status
+@anchor{#exit-status}
+@multitable {Code} {K18 (Command doesn't exist)} 
+@headitem 
+Code
+ @tab Response
+@item 
+0
+ @tab Success
+@item 
+1
+ @tab Error
+@item 
+2
+ @tab Illegal/Required Option
+@item 
+127
+ @tab K18 (Command doesn't exist)
+@item 
+130
+ @tab Ctl+C
+@end multitable
+
+@node Environment
+@section Environment
+@anchor{#environment}
+BROWSER=``w3m''@*
+PROMPT_COMMAND=prompt_command@*
+RANGER_LOAD_DEFAULT=false@*
+PATH=PATH:HOME/pads/bin
+
+@node Directories
+@section Directories
+@anchor{#directories}
+N/A
+
+@node History
+@section History
+@anchor{#history}
+@itemize
+@item
+PADS is General Purpose Artificial Intelligence designed to carry out
+every day business tasks. It's purpose is to provide book keeping,
+employee timesheets, client tracking, automation, etc. It can do double
+entry accounting for hybrid manufacturing companies. None of the data is
+loaded as Environment Variables, so your interaction with PADS is
+between you and it. It's original purpose was to serve as a website,
+with a relational historical database. Work on this project began in
+Python using the Django Framework on June 23, 2021 at 5:30pm. The
+accounting database first came online Oct.@ 13th, 2021 at 11:48pm. The
+Bash Syntax was first created by Joe Corso on May 4th, 2022. It was
+previously codenamed Project Eniac, to pay homage to the original
+project of the same name.@*
+@item
+Work began on an Arch Linux distro@*
+@item
+The original man page was created 2023-09-08@*
+@item
+Flask Project for Accounting was created@*
+@item
+Flask API was created@*
+@item
+Started using Qtile (switched from XFCE4).@*
+@item
+Created info page
+@end itemize
+
+@node Notes
+@section Notes
+@anchor{#notes}
+@itemize
+@item
+All new logic files added to ~/pads/module/ must be named by the flag or
+argument they represent.@*
+@item
+I wanted to following a syntax which follows the pattern because I
+thought it would be easy to code and work with. It seems cryptic with
+one letter names, but the code is easy, and each function can have its
+own logic. Most of it being wrappers for more complex commands that
+already exist anyway, but I have a hard time remembering. I made it
+similar to pacman just because I liked it.
+@end itemize
+
+@node Examples
+@section Examples
+@anchor{#examples}
+@code{pads -Ph}@*
+Show project help and exit
+
+@code{pads -Pps brain}@*
+Start a python project named ``brain''
+
+@code{pads -Ppm brain}@*
+Make a python project named ``brain''. This will create a virtual env
+for the project as well.
+
+@code{pads -Ppd brain}@*
+Delete the project named ``brain''. It will ask confirmation as well.
+
+@code{pads -Su}@*
+Update your machine.
+
+@code{pads -Su neofetch}@*
+Install neofetch to your machine.
+
+@code{pads -Sb}@*
+Back up your machine locally.
+
+@code{pads -x}@*
+Set the x flag for whatever command you need to debug.
+
+@node Interlink
+@chapter Interlink
+@anchor{#interlink}
+This is a collection of libraries written to work in Python's
+@uref{https://flask.palletsprojects.com/en/3.0.x/,,Flask} framework. It
+will generate a form and report for any table in a database. It will
+also create the urls, and the navigation bar. You can customize your
+website by generating your own instance of the API; or you can register
+the Blueprint(e.g.@ @code{app.register_blueprint(templetonBP)}), which
+has its own set of templates etc. So essentially, if you create a
+database for a library like in all tutorials and you need a form
+template and a report template, it will generate the form or report from
+the table in the database, and fill in the details in the template. To
+render the page in the browser just type in the url which corresponds to
+the table name, or make a navigation bar to generate the links for you.
+So let's walk through this so that I can remember how it works.
+
+@menu
+* Setup::
+* Formulator::
+* Templeton::
+* Safe Haven::
+@end menu
+
+@node Setup
+@section Setup
+@anchor{#setup}
+Setting up interlink is very easy. It depends on mysql-connector, and
+flask. Which will be downloaded automatically.I like to use some
+boilerplate for every flask project, as I'm sure most people do. This
+isn't a tutorial on Flask, so we'll skip setting up the project. The
+point is to get it from github to your site-packages directory.
+
+@enumerate 
+@item
+Make your flask project and create the virtual env@*
+@item
+Download:@*
+@code{python -m pip install git+https://github.com/padsRepo/interlink.git}@*
+@item
+Add to your project:@*
+@code{from interlink import *}
+@end enumerate
+
+In your @strong{init}.py file you need to create these ENV Vars for the
+API to find, and import the Blueprint: (I usually add these to the
+``activate'' file for starting the virtual env.)
+
+@verbatim
+      import os
+      from flask import Flask, Blueprint, flash, render_template, request, session, redirect, url_for, send_from_directory
+
+      from views import viewsBP
+
+      KEY = os.urandom(16)
+      os.environ['SECRET_KEY'] = str(KEY)
+      os.environ['DB_USER'] = 'username'
+      os.environ['DB_PASS'] = 'db password'
+      os.environ['BASE_DIR'] = os.path.dirname(__file__)
+      os.environ['LOG_DIR'] = os.environ.get('BASE_DIR') + '/log'
+      os.environ['whitelist'] = '["127.0.0.1", "192.168.0.*", "10.0.0.*"]'
+      os.environ['blacklist'] = '["My_brothers_smartphone_ip"]'
+
+      app = Flask(__name__)
+      app.config.from_mapping(SECRET_KEY=os.environ.get("SECRET_KEY"))
+      app.config['UPLOAD_FOLDER'] = 'repo/'
+
+      from interlink import *
+      app.register_blueprint(viewsBP)
+      app.register_blueprint(templetonBP)
+      app.register_error_handler(404, url_not_found)
+      app.register_error_handler(500, internal_error)
+
+      if __name__ == '__main__':
+        app.run()
+      else:
+        app.run(debug=True, host='0.0.0.0', port='8000')
+@end verbatim
+
+You'll see that we imported templetonBP from interlink, then just
+registered the Blueprint with
+@code{app_register_blueprint(templetonBP)}. We also imported
+@code{url_not_found}, and @code{internal_error} because PADS has a built
+in generic url handler. We register those with
+@code{app.register_error_handler(404, url_not_found)}, and
+@code{app.register_error_handler(500, internal_error)} respectively. The
+rest of it comes from your own custom urls that you generate from the
+@code{app.register_blueprint(viewsBP)} line. The DB name needs to be
+named exactly as it's named in SQL. @code{DB_USER} and @code{DB_PASS}
+must be named exactly that for the formulator to find it. The
+@code{SECRET_KEY} is needed for @code{flask.session}. Notice that we
+import interlink further down the file, so the env vars load first and
+prevents recursion.@*
+After that all you have to do is go to your browsers searchbar and
+type:@*
+@code{http://www.mysite.com/forms/blog/blog.html}
+
+@node Formulator
+@section Formulator
+@anchor{#formulator}
+The formulator is the module used to generate your forms, reports,
+queries, and anything DB related.
+
+Let's say you want to generate a blog. Use the formulator.Generator to
+make a query of your blog table from your SQL database. Create a
+variable from it, and then using Jinja's Templating Engine with Flask,
+we can manipulate the variable in an html template anyway we want.
+
+@verbatim
+      from interlink import Generator
+
+      @viewsBP.route('/blog/')
+      def blog():
+        gen = Generator('blog', 'DB_USER', 'DB_PASS')
+        content = gen.generateReport('blog')
+        return render_template('blog.html', content=content)
+@end verbatim
+
+Then your blog template could look something like this:
+
+@verbatim
+      {% extends 'base.html' %}
+      {% block description %}Raw Thoughts{% endblock %}
+      {% block keywords %}emo, roses are black violets are black my life is black everything is black{% endblock %}
+      {% block title %}Blog{% endblock %}
+
+      {% block content %}
+        <article class="col-12 col-s-12 col-m-12">
+          <h1>My personal shit show</h1>
+          {{ error }}
+          <table class="blog">
+            <tr>
+              {% for c in content %}
+                <th>{{ c[3] }}</th>
+              {% endfor %}
+            </tr>
+            {% for row in content %}
+                {% for c in row %}
+                <tr>{{ c }}</tr><br>
+                {% endfor %}
+            {% endfor %}
+          </table>
+        </article>
+      {% endblock %}
+@end verbatim
+
+Then, you can style the page any way that you want without having to
+keep going back and rewriting the logic for the form and report and also
+start cluttering your templates folder with a bunch of different types
+of forms, reports, navbars, blogs, logins, etc. It's just one, and it's
+already made.
+
+Conversely, you can build your project a bit more flexible. In your
+views.py file you only need two specific views that will generate every
+form, and report respectively. In the @code{index()} function you will
+see the nav var set to @code{generateNav()}, this generates the
+navigation bar for you. So put that where ever you want that to
+generate. If you're familiar with flask's app factory, and Blueprints,
+then this should look pretty simple. If not, check out the flask docs,
+it's pretty cool. They look something like this:
+
+---> views.py
+
+@verbatim
+      from flask import Blueprint, render_template
+      import interlink as i
+
+      viewsBP = Blueprint('/', __name__, url-prefix='/')
+
+      @viewsBP.route(/)
+      def index():
+        gen = i.Generator('DB', 'DB_USER', 'DB_PASS')
+        nav = gen.generateNav()
+        return render_template('index.html', nav=nav)
+
+      @viewsBP.route('/reports/<db>/<page>')
+      def generateReport(db, page):
+        gen = i.Generator(db, 'DB_USER', 'DB_PASS')
+        colName, colRow, error, title = gen.generateReport(page)
+        return render_template('reports.html', colName=colName, colRow=colRow, error=error, title=title)
+
+      @viewsBP.route('/forms/<db>/<path>', methods=['GET', 'POST'])
+      def generateForm(db, page):
+        gen = i.Generator(db, 'DB_USER', 'DB_PASS')
+        error, form, title = gen.generateForm(page)
+        return render_template('forms.html', form=form, error=error, title=title)
+
+      @viewsBP.route('/admin/<db>')
+      def admin(db):
+        nav = Generator(db, 'DB_USER', 'DB_PASS').generateNav()
+        return render_template('admin.html', nav=nav, db=db, title=db)
+@end verbatim
+
+Basically, make a route for a reports url and a route for a forms url so
+that the computer doesn't confuse the two. For your route you need to
+define a parameter for your database, and table. This is just to pass
+into the @code{generateReport()} or @code{generateForm()} functions
+which is used to find the table, and create the form or report. The
+report needs 4 parameters(One for the column names of the table, one for
+the data in the table, a title, and a generic error) and the form needs
+3(One to generate the forms, a title, and a generic error). The
+@code{generateNav()} doesn't need a parameter, but it searches for the
+database you set to your @code{Generator.__init__()}. Make sure to
+register the views in your app factory:
+
+---> _@emph{init_}.py
+
+@verbatim
+      from views import viewsBP
+      app.regist_blueprint(viewsBP)
+@end verbatim
+
+Make a template for your Forms:@*
+---> forms.html
+
+@verbatim
+      {% extends 'base.html' %}
+      {% block description %}{% endblock %}
+      {% block keywords %}{% endblock %}
+      {% block title %}{{ title }}{% endblock %}
+
+      {% block content %}
+
+      <article class="index">
+        <section class="col-6 col-s-6 col-m-6">
+          <fieldset class="form">
+            <label>{{ error }}</label>
+            <form method="POST">
+              {% for f in form %}
+                <label for="{{ f[0] }}">{{ f[0] }}</label>
+                <input type="text" name="{{ f[0] }}">
+              {% endfor %}
+              <input type="submit" value="submit">
+            </form>
+          </fieldset>
+        </section>
+      </article>
+
+      {% endblock %}
+@end verbatim
+
+Make a template for your reports:@*
+---> reports.html
+
+@verbatim
+      {% extends 'base.html' %}
+      {% block description %}{% endblock %}
+      {% block keywords %}{% endblock %}
+      {% block title %}{{ title }}{% endblock %}
+
+      {% block content %}
+
+        <article class="col-12 col-s-12 col-m-12">
+          <h1>{{ title }} Report</h1>
+          {{ error }}
+          <table class="data">
+            <tr>
+              {% for c in colName %}
+                <th>{{ c[0] }}</th>
+              {% endfor %}
+            </tr>
+            {% for row in colRow %}
+              <tr>
+                {% for c in row %}
+                <td>{{ c }}</td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </table>
+        </article>
+
+      {% endblock %}
+@end verbatim
+
+Finally, make a navigation menu for it all. This just plops every link
+onto the screen, so it's up to you to decide how to style it, maybe make
+a dropdown menu with it or something. The formulator filters
+``timestamp'', ``pri'', ``uni'', ``mul'', ``updated'', and anything that
+starts with ``q''. Be sure to decide which tables you actually want to
+use, and which not; so you don't accidentally insert data to a table
+you're not supposed to.
+
+---> base.html
+
+@verbatim
+      <nav class="pc mobile">
+        <a href="{{ url_for('/.index') }}">Index</a>
+        <div class="dropdown">
+          <span>Reports</span>
+          <div class="dropdownContent">
+            {% for p in nav %}
+            <a href="{{ url_for('templeton.generateReport', db='{}'.format(db),  page='{}'.format(p[0])) }}">{{ p[0] }}</a>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="dropdown">
+          <span>Forms</span>
+          <div class="dropdownContent">
+            {% for p in nav %}
+            <a href="{{ url_for('templeton.generateForm', db='{}'.format(db),  page='{}'.format(p[0])) }}">{{ p[0] }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </nav>
+@end verbatim
+
+That's it! So if you have a DB with tables named books, authors,
+planets, solarSystems@dots{}.etc. Just type in the url for the table
+name. For example:
+
+@code{https://www.website.com/reports/<dbname>/authors}@*
+OR@*
+@code{https://www.website.com/forms/<dbname>/solarSystems}
+
+@node Templeton
+@section Templeton
+@anchor{#templeton}
+Templeton is like the butler used to fetch the templates, and fill in
+the proper parameters. Most of templeton works under the hood, so if
+done well, you won't notice it's there.
+
+The easiest way to use templeton is to register its Blueprint's in your
+app. There are three, @code{404} @code{500} @code{templetonBP}
+
+@verbatim
+      app.register_blueprint(templetonBP)
+      app.register_error_handler(404, url_not_found)
+      pp.register_error_handler(500, internal_error)
+@end verbatim
+
+After that you may enjoy templeton's vast array of templates just by
+typing in the URL.
+
+Templeton also comes equiped with a tempulator, which runs off of
+tempulations. The tempulator is used for flasks Lazy Loading URL's.
+Remember that with templeton's tempulator, the generic templates are
+only coming from @code{interlink.templeton.views}. If you want to change
+where it's coming from you can use templeton's Tempulation, and create a
+new url loader function
+
+@uref{https://flask.palletsprojects.com/en/3.0.x/patterns/lazyloading/#loading-late,,Flask
+Lazy Loading}@*
+--> interlink.templeton.tempulator(import_name, url_rules=[], **options)
+
+@verbatim
+      @templetonBP.route('/')
+      @login
+      def catalog():
+        return tempulator("views.catalog", ['/catalog'])
+
+      # add a single route to the index view
+      tempulator('views.catalog', ['/catalog'])
+
+      # add two routes to a single function endpoint
+      url_rules = ['/catalog/','/catalog/<item>']
+      tempulator('views.catalog', url_rules)
+@end verbatim
+
+--> interlink.templeton.Tempulation(object)
+
+@verbatim
+      from flask import Flask
+      from interlink import Tempulation
+      app = Flask(__name__)
+      app.add_url_rule('/', view_func=Tempulation('yourapplication.views.index'))
+      app.add_url_rule('/user/<username>', view_func=Tempulation('yourapplication.views.user'))
+
+      # make a new tempulator
+      def myNewTempulator(import_name, url_rules=[], **options):
+          view = Tempulation(f"@{app_name@}.@{import_name@}")
+          for url_rule in url_rules:
+            app.add_url_rule(url_rule, view_func=view, **options)
+@end verbatim
+
+@node Safe Haven
+@section Safe Haven
+@anchor{#safe-haven}
+Safe Haven is like the security team for the president. Always lurking
+in the shadows, ready to defend your best interest. Since these are
+decorators they're easy to use.
+
+@uref{https://peps.python.org/pep-0318/,,Python Decorators}
+
+All you have to do is add the appropriate decorator to each page that
+you want to add the functionality to. Here's a simple index page, that I
+want really locked down.
+
+@verbatim
+      @viewsBP.route('/')
+      @backdoor
+      @honeypot
+      @login
+      def index():
+        return render_template('index.html')
+@end verbatim
+
+And there's nothing more to it then that. Safe Haven checks that the
+person connecting passes, and if not redirects them to the appropriate
+page. If you're using templeton's Blueprints it will redirect to its
+login screen, and everything works seamlessly.
+
+@node Tutorials
+@chapter Tutorials
+@anchor{#tutorials}
+A Collection of tutorials I've cobbled together after reading through
+docs, and stackover flow.
+
+@menu
+* Installing Arch::
+* Qtile or XFCE4::
+* Building a Server::
+@end menu
+
+@node Installing Arch
+@section Installing Arch
+@anchor{#installing-arch}
+Details about setting up Arch Linux. PADS has a built in Arch Install
+script. Use it at your own risk.
+
+@enumerate 
+@item
+Boot Mode@*
+Verify boot mode. If this command runs with no errors, you're using EFI
+Mode.@*
+@code{ls /sys/firmware/efi/efivars}
+
+@item
+Internet Connection@*
+Connect to the internet. If you're on Ethernet, it should be connected
+automatically.
+
+@enumerate 
+@item
+Enable and start
+@uref{https://wiki.archlinux.org/title/dhcpcd,,dhcpcd.service}@*
+@code{systemctl enable dhcpcd.service}@*
+@code{systemctl start dhcpcd.service}@*
+@item
+If you're on WIFI, use
+@uref{https://wiki.archlinux.org/title/Iwd#iwctl,,iwd}.@*
+@code{iwctl}@*
+@code{device list}@*
+@code{station device scan}@*
+@code{station device get-networks}@*
+@code{station device connect SSID}@*
+@item
+Ping something@dots{}@*
+@code{ping www.google.com}
+@end enumerate
+
+@item
+System Clock@*
+Update system clock@*
+@code{timedatectl set-ntp true}@*
+@code{timedatectl set-timezone America/New_York}@*
+@code{timedatectl status}
+
+@item
+Partition@*
+Partition the disk. I use
+@uref{https://wiki.archlinux.org/title/fdisk,,fdisk}. DO NOT OVERWRITE
+REDUNDANT STORAGE!!!! List devices, and choose your device.@*
+@code{fdisk -l}@*
+@code{fdisk /dev/sda}
+
+@enumerate 
+@item
+EFI Boot Mode:
+@enumerate 
+@item
+Build partition table@*
+@code{n} /mnt/boot partition@*
+@code{p} primary partition@*
+@code{1} /dev/sda1@*
+@code{""} first block default@*
+@code{+512M} last block 512mb@*
+@code{n} swap partition@*
+@code{p} primary partition@*
+@code{2} /dev/sda2@*
+@code{""} first block default@*
+@code{+2G} last block 2gb (Or however big you want swap)@*
+@code{n} /mnt partition@*
+@code{3} /dev/sda3@*
+@code{""} first block default@*
+@code{""} last block takes rest of space@*
+@code{w} write partition table@*
+@code{q} quit fdisk (Might exit automatically)@*
+@item
+Make filesystem:@*
+@code{mkfs.fat -F 32 /dev/sda1}@*
+@code{mkswap /dev/sda2}@*
+@code{mkfs.ext4 /dev/sda3}@*
+@item
+Mount filesystem:@*
+@code{mount --mkdir /dev/sda1 /mnt/boot}@*
+@code{swapon /dev/sda2}@*
+@code{mount /dev/sda3 /mnt}@*
+@end enumerate
+
+@item
+BIOS Boot Mode:
+@enumerate 
+@item
+Build partition table@*
+@code{n} /mnt partition@*
+@code{p} primary partition@*
+@code{1} partition number@*
+@code{""} first block default@*
+@code{+500G} last block (make it as big as you want)@*
+@code{t} type of filesystem@*
+@code{83} linux filesystem@*
+@code{a} bootable flag@*
+@code{1} partition number to make bootable@*
+@code{n} swap partition@*
+@code{p} primary partition@*
+@code{3} partition number@*
+@code{""} first block default@*
+@code{+2G} last block partition@*
+@code{t} type of filesystem@*
+@code{3} partition number@*
+@code{82} OR @code{swap} swap filesystem@*
+@code{w} write partition table@*
+@code{q} quit fdisk@*
+@item
+Make filesystem: @code{mkfs.ext4 /dev/sda1}@*
+@code{mkswap /dev/sda2}@*
+@code{swapon /dev/sda2}@*
+@item
+Mount filesystem:@*
+@code{mount /dev/sda1 /mnt}
+@end enumerate
+
+@end enumerate
+
+@item
+Backup@*
+Backup and Select your mirrorlist@*
+@code{cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak}@*
+@code{reflector --verbose -c "US" -f 12 -l 50 -n 12 --sort rate --protocol https --save /etc/pacman.d/mirrorlist}@*
+@code{cat /etc/pacman.d/mirrorlist}
+
+@item
+Install Packages@*
+@code{pacstrap /mnt base linux linux-firmware neofetch fakeroot nano sudo man-db man-pages texinfo lshw upower dhcpcd iwd}
+
+@end enumerate
+
+@quotation
+[!NOTE] If your iso file is old, you may get an error like this: error:
+some-package: signature from ``Some Person email@@@@some.domain'' is
+unknown trust You will need to update your key-ring with:@*
+@code{pacman -Sy}@*
+@code{sudo pacman -S archlinux-keyring}
+@end quotation
+@quotation
+[!NOTE] If you're using a hypervisor install proper guest utilities:@*
+@code{pacstrap /mnt virtualbox-guest-utils && systemctl enable vboxservice.service && systemctl start vboxservice.service}
+@end quotation
+@enumerate 7
+@item
+Configure the system@*
+@code{genfstab -U /mnt >> /mnt/etc/fstab}
+
+@item
+Change root@*
+@code{arch-chroot /mnt}
+
+@item
+Timezone@*
+Configure timezone for system@*
+@code{ln -sf /usr/share/zoneinfo/Region/City /etc/localtime}@*
+@code{hwclock --systohc}
+
+@item
+Locale@*
+Set device locale
+
+@enumerate 
+@item
+Manually edit /etc/locale.gen and uncomment your locale (ig:
+en_US.UTF-8) OR run the following command:@*
+@code{sed -i "s/#en_US.UTF-8 UTF8/en_US.UTF-8 UTF-8/g" /etc/locale.gen}@*
+@item
+Generate locale file@*
+@code{locale-gen}@*
+@item
+Manually edit /etc/locale.conf OR run the following command@*
+@code{echo "LANG=en_US.UTF-8" >> /etc/locale.conf}
+@end enumerate
+
+@item
+OS Environment@*
+Create hostname, host, and user, enable dhcpcd.service@*
+@code{systemctl enable dhcpcd.service}@*
+@code{echo "$hostname" > /etc/hostname}@*
+@code{echo "127.0.0.1 localhost" >> /etc/hosts}@*
+@code{echo "::1 localhost" >> /etc/hosts}@*
+@code{echo "127.0.1.1 $hostname" >> /etc/hosts}@*
+@code{passwd} this is for root password NOT the user@*
+@code{useradd -m $user} add your user@*
+@code{passwd $user} enter your user password@*
+@code{sudo nano /etc/sudoers}@*
+@code{$user ALL=(ALL:ALL) ALL" >> /etc/sudoers}
+
+@item
+Bootloader@*
+Install Bootloader (I'm using GRUB)
+
+@enumerate 
+@item
+EFI Bootloader:@*
+@code{pacman -Syu grub efibootmgr}@*
+@code{grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB}@*
+@code{grub-mkconfig -o /boot/grub/grub.cfg}@*
+@item
+BIOS Bootloader:@*
+@code{pacman -Syu grub}@*
+@code{grub-install --target=i386-pc /dev/sda}@*
+@code{grub-mkconfig -o /boot/grub/grub.cfg}
+@end enumerate
+
+@item
+Exit Chroot and Reboot:@*
+@code{exit}@*
+@code{reboot}
+
+@end enumerate
+
+@node Qtile or XFCE4
+@section Qtile or XFCE4
+@anchor{#qtile-or-xfce4}
+Installing Qtile or XFCE4
+
+@menu
+* Setup Qtile::
+* Setup XFCE4::
+@end menu
+
+@node Setup Qtile
+@subsection Setup Qtile
+@anchor{#setup-qtile}
+There isn't much to say. This is something already well
+@uref{https://qtile.org/,,documented}.
+
+@enumerate 
+@item
+Start by installing it, and picom for dynamic windows:@*
+@code{sudo pacman -Syu xorg xorg-server xorg-apps xorg-xinit xterm qtile picom}
+@end enumerate
+
+@quotation
+[!NOTE] The default config is loaded from
+@emph{~/.config/qtile/config.py}. If it's not there, copy it from
+@emph{/usr/share/doc/qtile/default_config.py}. The config for picom is
+at @emph{/etc/xdg/picom.conf}.
+@end quotation
+@enumerate 2
+@item
+Change ~/.xinitrc to add the following line:@*
+@code{sudo nano ~/.xinitrc}@*
+@code{picom &}@*
+@code{exec qtile start}@*
+@item
+Install the qtile-extras to make the bar look cool: It's only on the
+AUR@*
+@code{cd ~/Downloads}@*
+@code{sudo git clone https://aur.archlinux.org/qtile-extras-git.git}@*
+@code{cd qtile-extras}@*
+@code{makepkg -si}
+@end enumerate
+
+@node Setup XFCE4
+@subsection Setup XFCE4
+@anchor{#setup-xfce4}
+@enumerate 
+@item
+Install the packages@*
+@code{sudo pacman -Syu xorg xorg-server xorg-apps xorg-xinit xterm xfce4 xfce4-goodies unzip}@*
+@item
+Change ~/.xinitrc and add these lines:@*
+@code{sudo nano ~/.xinitrc}@*
+@code{exec startxfce4}@*
+@item
+Customize the theme:@*
+@code{sudo mkdir $HOME/.icons}@*
+@code{sudo mkdir $HOME/.themes}@*
+@code{sudo cp /path/to/icon/.face $HOME/.face}
+@end enumerate
+
+@quotation
+[!NOTE] You can find all kinds of cool looking themes and icons over at
+@@url@{https://www.xfce-look.org/browse/, xfce-look.org@}. Download the
+theme or icon you like and unpack it just like any other tar file. Then
+just copy and paste your unpacked candy into its respective directory.
+The beauty of XFCE is that all you have to do is create a ``.theme''
+directory, an ``.icon'' directory, and a ``.face'' icon in your home
+directory, and xfce4 will find it when you log in.
+@end quotation
+
+@node Building a Server
+@section Building a Server
+@anchor{#building-a-server}
+Details about setting up a home server
+
+@node Reference
+@chapter Reference
+@anchor{#reference}
+
+@menu
+* Interlink Ref::
+@end menu
+
+@node Interlink Ref
+@section Interlink Ref
+@anchor{#interlink-ref}
+Reference information for the Interlink Library
+
+@menu
+* interlinkenv::
+* interlinktoolkitget_script_path::
+* interlinktoolkitsite_map::
+* interlinktoolkitDBdb user password::
+* interlinkformulatorGeneratordb user password::
+* interlinksafeHaven@@honeypotf::
+* interlinksafeHaven@@backdoorf::
+* interlinksafeHaven@@loginf::
+* interlinktempletonTempulationobject::
+* interlinktempletontempulatorimport_name url_rules=[] **options::
+* interlinktempletontempletonBP::
+@end menu
+
+@node interlinkenv
+@subsection interlink.env
+@anchor{#interlink.env}
+Environment variables needed for interlink
+
+@verbatim
+KEY = os.urandom(16)
+os.environ['SECRET_KEY'] = str(KEY)
+os.environ['DB'] = 'db_name'
+os.environ['DB_USER'] = 'db_username'
+os.environ['DB_PASS'] = 'db_password'
+os.environ['BASE_DIR'] = os.path.dirname(__file__)
+os.environ['LOG_DIR'] = os.environ.get('BASE_DIR') + '/log'
+os.environ['whitelist'] = '["127.0.0.1", "my_ip", "192.168.0.*"]'
+os.environ['blacklist'] = '["105.0.0.*"]'
+@end verbatim
+
+@node interlinktoolkitget_script_path
+@subsection interlink.toolkit.get_script_path()
+@anchor{#interlink.toolkit.get_script_path}
+Get the current path the script being ran, not the parent directory or
+current working directory.
+
+@verbatim
+def get_script_path():
+    return os.path.dirname(os.path.realpath(sys.argv[0]))
+@end verbatim
+
+@node interlinktoolkitsite_map
+@subsection interlink.toolkit.site_map()
+@anchor{#interlink.toolkit.site_map}
+Produces a clickable list of all URL's within the project, minus any
+``GET'' requests.
+
+@verbatim
+def has_no_empty_params(rule):
+  defaults = rule.defaults if rule.defaults is not None else ()
+  arguments = rule.arguments if rule.arguments is not None else ()
+  return len(defaults) >= len(arguments)
+
+def site_map():
+  links = []
+  for rule in app.url_map.iter_rules():
+  # Filter out rules we can't navigate to in a browser
+  # and rules that require parameters
+    if "GET" in rule.methods and has_no_empty_params(rule):
+      url = url_for(rule.endpoint, **(rule.defaults or @{@}))
+      links.append((url, rule.endpoint))
+  # links is now a list of url, endpoint tuples
+  return links
+@end verbatim
+
+@node interlinktoolkitDBdb user password
+@subsection interlink.toolkit.DB(db, user, password)
+@anchor{#interlink.toolkit.dbdb-user-password}
+Creates a connection to a SQL database.
+
+@verbatim
+class DB:
+  def __init__(self, db, user, password):
+    self.db = db
+    self.user = user
+    self.password = password
+  def connect(self):
+    mydb = mysql.connector.connect(
+    host='localhost',
+    database=os.environ.get(self.db),
+    user=os.environ.get(self.user),
+    password=os.environ.get(self.password)
+    )
+    return mydb
+  def close(self):
+    db = DB(self.db, self.user, self.password)
+    if db is not None:
+      db.close()
+@end verbatim
+
+@verbatim
+`__init__(self, db, user, password)`  
+Initalize the connection, create the object.  
+    `db`  
+    The name of the Environment Variable for the database  
+    `user`  
+    The name of the Environment Variable for the user which has access to the database  
+    `password`  
+    The name of the Environment Variable for the password of the user which has access to the database  
+`connect(self)`  
+Create the connection to the database for creating the cursor.  
+`close(self)`  
+Close the connection to the database  
+@end verbatim
+
+@node interlinkformulatorGeneratordb user password
+@subsection interlink.formulator.Generator(db, user, password)
+@anchor{#interlink.formulator.generatordb-user-password}
+Create the object for generating your form, report, query, or nav.
+
+@verbatim
+class Generator: 
+  def __init__(self, db, user, password):
+    self.db = db
+    self.user = user
+    self.password = password
+    
+  def generateForm(self, table):
+    error, form = createForm(self.db, self.user, self.password, table)
+    title = table
+    return error, form, title
+    
+  def generateReport(self, table):
+    colName, colRow, error = createReport(self.db, self.user, self.password, table)
+    title = table
+    return colName, colRow, error, title
+    
+  def generateQuery(self, table):
+    return createQuery(self.db, self.user, self.password, table)
+    
+  def generateNav(self):
+    return createNav(self.db, self.user, self.password)
+@end verbatim
+
+@verbatim
+`__init__(self, db, user, password)`  
+Initalize the connection, create the object.  
+    `db`  
+    The name of the Environment Variable for the database  
+    `user`  
+    The name of the Environment Variable for the user which has access to the database  
+    `password`  
+    The name of the Environment Variable for the password of the user which has access to the database  
+`generateForm(self, table)`  
+Generate the Form, URL, and Template for said @code{table} in database. Variables returned are `error` `form` `title`  
+`generateReport(self, table)`
+Generate the Report, URL, and Template for said @code{table} in database. Variables returned are @code{error} @code{table} @code{colName} @code{colRow}
+`generateQuery(self, table)`
+Generate a Query for said @code{table} in database. Unlike creating a URL and Template, you can create a variable to be used in a template.
+`generateNav(self)`
+Generate a Navigation Bar for said @code{table} in database. It basically just finds the table names, rather than the table data.
+@end verbatim
+
+@node interlinksafeHaven@@honeypotf
+@subsection interlink.safeHaven.@@honeypot(f)
+@anchor{#interlink.safehaven.honeypotf}
+@@url@{https://peps.python.org/pep-0318/, See: Python Decorator@} Python
+decorator you can use as a honeypot. Any IP Adress that is black listed
+will be redirected to a login page that logs the username and password
+they attempt to use.
+
+@verbatim
+def honeypot(f):
+  @wraps(f)
+  def decorated_function(*args, **kwargs):
+    if session == @{@}:
+      ip = request.remote_addr
+      for b in blacklist:
+        if ip in blacklist:
+          print(" *", str(d.now()) + ' -->', "This IP is blacklisted:", ip)
+          print(" *", str(d.now()) + ' -->', "This IP is blacklisted:", ip, file=open(os.environ.get('LOG_DIR') + '/pads.log', 'a'))
+          return redirect(url_for('templeton.loginRequired'))
+    return f(*args, **kwargs)
+  return decorated_function
+@end verbatim
+
+@node interlinksafeHaven@@backdoorf
+@subsection interlink.safeHaven.@@backdoor(f)
+@anchor{#interlink.safehaven.backdoorf}
+Python decorator you can use as a backdoor. Any page which has this
+decorator will give IP Address' on the whitelist full access to the
+page.
+
+@verbatim
+def backdoor(f):
+  @wraps(f)
+  def decorated_function(*args, **kwargs):
+    if session == @{@}:
+      ip = request.remote_addr
+      for w in whitelist:
+        if ip in whitelist:
+          session['yourballslooklikemine'] = ip
+    return f(*args, **kwargs)
+  return decorated_function
+@end verbatim
+
+@node interlinksafeHaven@@loginf
+@subsection interlink.safeHaven.@@login(f)
+@anchor{#interlink.safehaven.loginf}
+Python decorator you can use to check if a user is logged in. If not,
+they will be redirected to a login page from where they can log in.
+
+@verbatim
+def login(f):
+  @wraps(f)
+  def decorated_function(*args, **kwargs):
+    if session == @{@}:
+      ip = request.remote_addr
+      print(" * [USER]", str(d.now()) + ' -->', ip, "directed to login")
+      print(" * [USER]", str(d.now()) + ' -->', ip, "directed to login", file=open(os.environ.get('LOG_DIR') + '/pads.log', 'a'))
+      return redirect(url_for('templeton.secure_login'))
+    return f(*args, **kwargs)
+  return decorated_function
+@end verbatim
+
+@node interlinktempletonTempulationobject
+@subsection interlink.templeton.Tempulation(object)
+@anchor{#interlink.templeton.tempulationobject}
+If you don't like templetons tempulator, you can use its Templulation to
+create your own!
+
+@verbatim
+class Tempulation(object):
+    def __init__(self, import_name):
+        self.__module__, self.__name__ = import_name.rsplit('.', 1)
+        self.import_name = import_name
+    @cached_property
+    def view(self):
+        return import_string(self.import_name)
+    def __call__(self, *args, **kwargs):
+        return self.view(*args, **kwargs)
+@end verbatim
+
+@node interlinktempletontempulatorimport_name url_rules=[] **options
+@subsection interlink.templeton.tempulator(import_name, url_rules=[],
+**options)
+@anchor{#interlink.templeton.tempulatorimport_name-url_rules-options}
+Used to generate generic templates from templeton directory of templates
+
+@verbatim
+tempulator('views.catalog', ['/catalog'])
+@end verbatim
+
+@verbatim
+def tempulator(import_name, url_rules=[], **options):
+    view = Tempulation(f"@{__name__@}.@{import_name@}")
+    for url_rule in url_rules:
+      app.add_url_rule(url_rule, view_func=view, **options)
+@end verbatim
+
+@node interlinktempletontempletonBP
+@subsection interlink.templeton.templetonBP
+@anchor{#interlink.templeton.templetonbp}
+Used if you would like to register templeton's Blueprint within your
+project. Mostly used to generate templeton's Forms, Report, and URL's.
+
+@verbatim
+templates = os.path.dirname(__file__) + '/templates/'
+templetonBP = Blueprint('templeton', __name__, url_prefix='/', template_folder=templates)
+@templetonBP.errorhandler(404)
+@templetonBP.errorhandler(500)
+@templetonBP.route('/guide/<page>')
+@templetonBP.route('/interlink/')
+@templetonBP.route('/loginRequired/', methods=['GET', 'POST'])
+@templetonBP.route('/login/', methods=['GET', 'POST'])
+@templetonBP.route('/register/', methods=['GET', 'POST'])
+@templetonBP.route('/reports/<db>/<page>')
+@templetonBP.route('/forms/<db>/<page>', methods=['GET', 'POST'])
+@templetonBP.route('/admin/<db>')
+@end verbatim

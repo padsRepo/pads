@@ -1,0 +1,13 @@
+pkgbase = pads
+	pkgdesc = Personal Assistant and Deployment System
+	pkgver = 0.1.6
+	pkgrel = 1
+	url = /pads
+	install = .install
+	changelog = CHANGELOG.md
+	arch = x86_64
+	license = MIT
+	source = pads-0.1.6.tar.gz
+	sha256sums = SKIP
+
+pkgname = pads

@@ -1,3 +1,0 @@
-# Business Plans
-
-## TOC
